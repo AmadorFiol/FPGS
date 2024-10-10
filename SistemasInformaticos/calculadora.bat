@@ -5,6 +5,7 @@ echo "S:Sumar"
 echo "R:Resta"
 echo "M:Multiplicar"
 echo "D:Division"
+echo "Q:Salir"
 
 set /p input="Que quieres hacer: "
 goto %input%
