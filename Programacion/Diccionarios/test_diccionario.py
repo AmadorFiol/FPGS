@@ -40,7 +40,9 @@ print("El nombre completo del nacido es: ",nombre,personas[padre]["Apellido1"],p
 Dinamismo mejorado
 
 Array con DNI's
+input usuario
 Bucle en la que:
     Si no existe una persona con ese DNI pedir datos de dicha persona
         Si existe indicar la existencia de esa persona
+
 '''
