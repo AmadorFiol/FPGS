@@ -1,7 +1,6 @@
 @echo off
-REM V.If
 cls REM Limpiar la pantalla
-
+:calc
 echo "Calculadora"
 echo "S:Sumar"
 echo "R:Resta"
@@ -10,37 +9,42 @@ echo "D:Division"
 echo "Q:Salir"
 
 set /p input="Que quieres hacer: "
+goto %input%
 
-REM RECUERDA EL PUTO ESPACIO
-if "%input%"=="S" (
+:s
     set /p x="Di un primer num: "
-    echo "%x%"
     set /p y="Di un segundo num: "
-    echo "%y%"
     set /a z=x+y
     echo "El resultado de la suma de %x% y %y% es %z%"
     pause
-)else if "%input%"=="R" (
+    goto calc
+:r
     set /p x="Di un primer num: "
     set /p y="Di un segundo num: "
     set /a z=x-y
     echo "El resultado de la resta de %x% y %y% es %z%"
     pause
-)else if "%input%"=="M" (
+    goto calc
+:m
     set /p x="Di un primer num: "
     set /p y="Di un segundo num: "
     set /a z=x*y
     echo "El resultado de la multiplicacion de %x% y %y% es %z%"
     pause
-)else if "%input%"=="D" (
+    goto calc
+:d
     set /p x="Di un primer num: "
     set /p y="Di un segundo num: "
-    if "%y%"=="0" (
+    if %y%=="0"(
         echo "No se puede dividir entre 0"
-        )else (
-            set /a z=x/y
-            echo "El resultado de la division de %x% y %y% es %z%"
-        )
-        pause
-)
-REM <LSS, >GTR, =< LEQ, >= GEQ
+    )else(
+        set /a z=x/y
+        echo "El resultado de la division de %x% y %y% es %z%"
+    )
+    pause
+    goto calc
+
+:q
+    exit
+
+:: <LSS, >GTR, =< LEQ, >= GEQ

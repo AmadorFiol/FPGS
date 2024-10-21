@@ -1,0 +1,6 @@
+Diseña una base de datos para una agencia de viajes que gestione clientes, paquetes turísticos, reservas de viajes y la relación con guías turísticos. Los requerimientos son los siguientes:
+- La agencia ofrece varios paquetes turísticos. Cada paquete tiene ID único, nombre, descripción precio, duración
+-Los clientes pueden reservar múltiples paquetes turísticos. Cada cliente tiene un ID único, nombre, dirección y núm. tel.
+-Se deben almacenar las fechas de inicio y fin de las reservas así como el estado (confirmada, cancelada, completada)
+-Los guías turísticos están asociados con varios paquetes turísticos, Cada guía tiene un ID único, nombre, especialidad y experiencia
+- Un cliente puede calificar un paquete turístico después de haberlo completado, con una calificación y comentarios
