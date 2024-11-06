@@ -53,7 +53,7 @@ goto c
 echo Son %contar% numeros
 goto fin
 
-::Zona encontrar menor
+::Encontrar menor
 :p
 if "%1"=="" goto finP
 if %1 lss %min% set min=%1
