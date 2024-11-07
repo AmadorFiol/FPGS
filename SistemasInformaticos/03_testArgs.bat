@@ -1,4 +1,7 @@
 @echo off
+::Bucle que mientras el argumento no sea un numero compruebe si es alguno de los paramentros
+::Si es, cambia el valor de un variable bool y realiza un shift y llama a la etiqueta inicio para repetir el bucle
+
 
 ::Control de errores
 if "%1"=="" (
