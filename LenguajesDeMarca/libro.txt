@@ -29,6 +29,6 @@
 		</capitulo4>
 	</capitulos>
 	<descripcion>
-		"Esto es una descripción, lalallalalalala"
+		"Lorem Ipsum"
 	</descripcion>
 </libro>
