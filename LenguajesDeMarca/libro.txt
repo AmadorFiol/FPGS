@@ -1,0 +1,34 @@
+<libro>
+	<titulo>
+		"Introducción a la Programación en Python"
+	</titulo>
+	<autor>
+		"Maria Llorenç"
+	</autor>
+	<isbn>
+		"978-3-16-148410-0"
+	</isbn>
+	<editorial>
+		"TechBooks"
+	</editorial>
+	<publicacion>
+		2022
+	</publicacion>
+	<capitulos>
+		<capitulo1>
+			"Introducción a Python"
+		</capitulo1>
+		<capitulo2>
+			"Tipos de datos y variables"
+		</capitulo2>
+		<capitulo3>
+			"Control de flujo"
+		</capitulo3>
+		<capitulo4>
+			"Funciones y modulos"
+		</capitulo4>
+	</capitulos>
+	<descripcion>
+		"Esto es una descripción, lalallalalalala"
+	</descripcion>
+</libro>
