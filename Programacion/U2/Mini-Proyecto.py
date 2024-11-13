@@ -27,12 +27,14 @@ def show_media():
 
 def show_estadisticas():
     cantDados=[0,0,0,0,0,0]
+    div=0
     for tuplas in bbdd_dados:
         for i in tuplas:
             cantDados[i-1]+=1
-        
+            div+=1
+       
     for i in range(1,len(cantDados)+1):
-        print("El numero", i," ha salido:",cantDados[i-1])
+        print("El numero", i," ha salido:",cantDados[i-1],"Un",cantDados[i-1]*100/div,"%")
     time.sleep(3)
 
 
@@ -50,11 +52,23 @@ while(salir==False):
             trhow_dados()
 
         case "M":
-            show_media()
+            if len(bbdd_dados)==0:
+                print("Tira los dados primero")
+                time.sleep(2)
+            else:
+                show_media()
         case "E":
-            show_estadisticas()
+            if len(bbdd_dados)==0:
+                print("Tira los dados primero")
+                time.sleep(2)
+            else:
+                show_estadisticas()
         case "V":
-            show_dados(bbdd_dados[-1])
+            if len(bbdd_dados)==0:
+                print("Tira los dados primero")
+                time.sleep(2)
+            else:
+                show_dados(bbdd_dados[-1])
         case "S":
             salir=True
         case _:
