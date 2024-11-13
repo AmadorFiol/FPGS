@@ -76,10 +76,13 @@ def create_libro():
     autorUser=input("Escribe el nombre del autor ")
     libroUser={"nombre":nombreUser,"autor":autorUser,"disponibilidad":True}
     if input("Escriba 'C' y presione enter para confirmar ").upper()=="C":
-        return libroUser
+        if check_existe(nombreUser)!=True:
+            return libroUser
+        else:
+            print("El libro ya existe")
     else:
         print("Se ha cancelado la accion")
-        os.system("pause")
+    os.system("pause")
 
 def add_libro():
     libroAdd=create_libro()
