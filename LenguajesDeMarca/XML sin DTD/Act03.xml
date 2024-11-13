@@ -1,0 +1,53 @@
+<empleados>
+    <empleado>
+        <nombre>
+            Ana
+        </nombre>
+        <apellido>
+            Garcia
+        </apellido>
+        <edad>
+            30
+        </edad>
+        <departamento>
+            Ventas
+        </departamento>
+        <cargo>
+            Ejecutivo de ventas
+        </cargo>
+    </empleado>
+    <empleado>
+        <nombre>
+            Luis
+        </nombre>
+        <apellido>
+            Rodrigez
+        </apellido>
+        <edad>
+            45
+        </edad>
+        <departamento>
+            Finanzas
+        </departamento>
+        <cargo>
+            Analista financiero
+        </cargo>
+    </empleado>
+    <empleado>
+        <nombre>
+            Maria
+        </nombre>
+        <apellido>
+            Lopez
+        </apellido>
+        <edad>
+            28
+        </edad>
+        <departamento>
+            Marketing
+        </departamento>
+        <cargo>
+            Especialista en redes sociales
+        </cargo>
+    </empleado>
+</empleados>

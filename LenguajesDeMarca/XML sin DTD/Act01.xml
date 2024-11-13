@@ -1,0 +1,35 @@
+<libros>
+	<libro>
+		<titulo>
+			"Dragon Ball (tomo 1)"
+		</titulo>
+		<autor>
+			"Akira Toriyama"
+		</autor>
+		<publicacion>
+			1984
+		</publicacion>
+	</libro>
+	<libro>
+		<titulo>
+			"Naruto (tomo 1)"
+		</titulo>
+		<autor>
+			"Masashi Kishimoto"
+		</autor>
+		<publicacion>
+			1999
+		</publicacion>
+	</libro>
+	<libro>
+		<titulo>
+			"One Piece (tomo 1)"
+		</titulo>
+		<autor>
+			"Eichiro Oda"
+		</autor>
+		<publicacion>
+			1997
+		</publicacion>
+	</libro>
+</libros>

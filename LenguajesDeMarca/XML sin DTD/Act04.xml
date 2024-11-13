@@ -1,0 +1,47 @@
+<productos>
+    <producto>
+        <id>1</id>
+        <nombre>producto1</nombre>
+        <descripcion>lorem ipsum</descripcion>
+        <precio>5€</precio>
+        <categoria>cable</categoria>
+        <cantidadStock></cantidadStock>
+        <imagen>1.png</imagen>
+    </producto>
+    <producto>
+        <id>2</id>
+        <nombre>producto2</nombre>
+        <descripcion>lorem ipsum</descripcion>
+        <precio>6€</precio>
+        <categoria>cable</categoria>
+        <cantidadStock></cantidadStock>
+        <imagen>2.png</imagen>
+    </producto>
+    <producto>
+        <id>3</id>
+        <nombre>producto3</nombre>
+        <descripcion>lorem ipsum</descripcion>
+        <precio>7€</precio>
+        <categoria>libro</categoria>
+        <cantidadStock></cantidadStock>
+        <imagen>3.png</imagen>
+    </producto>
+    <producto>
+        <id>4</id>
+        <nombre>producto4</nombre>
+        <descripcion>lorem ipsum</descripcion>
+        <precio>8€</precio>
+        <categoria></categoria>
+        <cantidadStock>periferico</cantidadStock>
+        <imagen>4.png</imagen>
+    </producto>
+    <producto>
+        <id>5</id>
+        <nombre>producto5</nombre>
+        <descripcion>lorem ipsum</descripcion>
+        <precio>10€</precio>
+        <categoria>movil</categoria>
+        <cantidadStock></cantidadStock>
+        <imagen>5.png</imagen>
+    </producto>
+</productos>
