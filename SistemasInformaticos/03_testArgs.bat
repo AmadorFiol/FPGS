@@ -1,11 +1,14 @@
 @echo off
-::Bucle que mientras el argumento no sea un numero compruebe si es alguno de los paramentros
-::Si es, cambia el valor de un variable bool y realiza un shift y llama a la etiqueta inicio para repetir el bucle
-
 
 ::Control de errores
 if "%1"=="" (
-    echo Uso: %0 -arg num1 num2...
+    echo Uso: %0 -args num1 num2...
+    echo Los parametros son:
+    echo -c para contar los numeros
+    echo -p para encontrar el numero mas pequeno
+    echo -g para encontrar el numero mas grande
+    echo -s para realizar la suma de todos los numeros
+    echo -a para realizar todas las anteriores
     pause
     goto fin
 ) else if "%2"=="" (
@@ -18,91 +21,61 @@ if "%1"=="" (
     goto fin
 )
 
-::Inicializamos variables
-    set contar=0
-    set min=%2
-    set max=%2
-    set total=%2
-
-::If's que controlan el argumento y a donde van dirigidos
+::Bucle para comprobar los parametros
+:parametros
 if "%1"=="-c" (
     shift
-    goto c
+    set c=1
+    goto parametros
 ) else if "%1"=="-p" (
     shift
-    goto p
+    set p=1
+    goto parametros
 ) else if "%1"=="-g" (
     shift
-    goto g
+    set g=1
+    goto parametros
 ) else if "%1"=="-s" (
     shift
-    goto s
+    set s=1
+    goto parametros
 ) else if "%1"=="-a" (
     shift
-    goto a
+    set c=1
+    set p=1
+    set g=1
+    set s=1
 )
 
-::Con shift nos movemos a una posicion a la derecha y luego volvermos a la etiqueta $Arg
-::Cuando se agoten las posiciones %1 estara vacio y nos dirigiremos a la etiqueta fin$Arg
+::Inicializamos variables
+    set contar=0
+    set min=%1
+    set max=%1
+    set total=%1
 
-::Etiquetas para conteo
-:c
-if "%1"=="" goto finC
-set /a contar=%contar%+1
-shift
-goto c
-
-:finC
-echo Son %contar% numeros
-goto fin
-
-::Encontrar menor
-:p
-if "%1"=="" goto finP
-if %1 lss %min% set min=%1
-shift
-goto p
-
-:finP
-echo El numero mas pequeno es %min%
-goto fin
-
-::Encontrar mayor
-:g
-if "%1"=="" goto finG
-if %1 gtr %max% set max=%1
-shift
-goto g
-
-:finG
-echo El numero mas grande es %max%
-goto fin
-
-::Sumatorio
-:s
-if "%1"=="" goto finS
-set /a total=%total%+%1
-shift
-goto s
-
-:finS
-echo El total es: %total%
-goto fin
-
-::Zona todos
-:a
-if "%1"=="" goto finA
+::Se realizan los calculos de todos
+:loop
+if "%1"=="" goto mensajes
 set /a contar=%contar%+1
 if %1 lss %min% set min=%1
 if %1 gtr %max% set max=%1
 set /a total=%total%+%1
 shift
-goto a
+goto loop
 
-:finA
-echo Son %contar% numeros
-echo El numero mas pequeno es %min%
-echo El numero mas grande es %min%
-echo El total es: %total%
+::Se muestran los mensajes correspondientes al de los parametros pasados por el usuario
+:mensajes
+if %c%==1 (
+    echo Son %contar% numeros
+)
+if %p%==1 (
+    echo El numero mas pequeno es %min%
+)
+if %g%==1 (
+    echo El numero mas grande es %min%
+)
+if %s%==1 (
+    echo El total es: %total%
+)
 
 :fin
