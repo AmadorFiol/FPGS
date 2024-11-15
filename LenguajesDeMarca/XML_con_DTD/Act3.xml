@@ -1,0 +1,46 @@
+<!DOCTYPE hardwareCatalog [
+<!ELEMENT hardwareCatalog (item+)>
+<!ELEMENT item (id, type, brand, model,specifications)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT brand (#PCDATA)>
+<!ELEMENT model (#PCDATA)>
+<!ELEMENT specifications (#PCDATA)>
+]>
+<hardwareCatalog>
+    <item>
+        <id>1</id>
+        <type>Processor</type>
+        <brand>Intel</brand>
+        <model>Core i7-9700K</model>
+        <specifications>8-Core, 3.6 GHz</specifications>
+    </item>
+    <item>
+        <id>2</id>
+        <type>RAM</type>
+        <brand>Corsair</brand>
+        <model>Vengeance LPX 16GB</model>
+        <specifications>DDR4, 3200MHz</specifications>
+    </item>
+    <item>
+        <id>3</id>
+        <type>Graphics Card</type>
+        <brand>NVIDIA</brand>
+        <model>GeForce RTX 3080</model>
+        <specifications>10GB GDDR6X</specifications>
+    </item>
+    <item>
+        <id>4</id>
+        <type>Hard Drive</type>
+        <brand>Western Digital</brand>
+        <model>WD Blue 1TB</model>
+        <specifications>SATA, 7200 RPM</specifications>
+    </item>
+    <item>
+        <id>5</id>
+        <type>Motherboard</type>
+        <brand>ASUS</brand>
+        <model>ROG Strix Z390-E</model>
+        <specifications>Socket LGA1151, ATX</specifications>
+    </item>
+</hardwareCatalog>
