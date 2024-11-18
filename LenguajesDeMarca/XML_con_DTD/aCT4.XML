@@ -1,35 +1,32 @@
 <!DOCTYPE school [
 <!ELEMENT school (student+)>
-<!ELEMENT student (id, name, age, status)>
-<!ELEMENT id (#REQUIRED)>
+<!ELEMENT student (name, age)>
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT age (#PCDATA)>
-<!ELEMENT status (#IMPLIED)>
+<!ATTLIST student 
+    id ID #REQUIRED
+    status CDATA #IMPLIED>
 ]>
+
 <school>
-    <student id=a1>
+    <student id="a1" status="Active">
         <name>Juan Perez</name>
         <age>22</age>
-        <status></status>
     </student>
-    <student id=a2>
+    <student id="a2" status="N/A">
         <name>Maria Gonzalez</name>
         <age>20</age>
-        <status></status>
     </student>
-    <student id=a3>
+    <student id="a3" status="Inactive">
         <name>Carlos Rodrigez</name>
         <age>21</age>
-        <status></status>
     </student>
-    <student id=a4>
+    <student id="a4" status="Graduated">
         <name>Laura Martinez</name>
         <age>23</age>
-        <status></status>
     </student>
-    <student id=a5>
+    <student id="a5" status="Active">
         <name>Andres Lopez</name>
         <age>19</age>
-        <status></status>
     </student>
 </school>
