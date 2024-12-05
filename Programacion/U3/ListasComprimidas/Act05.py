@@ -2,4 +2,4 @@
 #Crea la misma versión del programa utilizando el código de carácter del código ASCII→ Actividad 4
 import string
 array=[char for char in string.ascii_lowercase if char in 'aeiou']
-print(array)
+print("Vocales: ",array)
