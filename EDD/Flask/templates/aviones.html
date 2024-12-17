@@ -2,30 +2,26 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Lista de usuarios</title>
-        <link rel="stylesheet" href="./static/users.css">
+        <title>Lista de aviones</title>
     </head>
     <body>
         <header>
-            <h1>Lista de usuarios</h1>
-            <p>Usuarios registrados:</p>
-
+            <h1>Lista de aviones</h1>
         </header>
         <main>
             <ul>
-                {% for user in users %}
+                {% for avion in arrayAviones %}
                 <li>
-                    Nombre: {{user.name}} - {{user.age}} años
+                    Nombre: {{avion.nombre}} - {{avion.tipo}}
 
-                    {% if user.is_admin %}
+                    {% if avion.tipo=="militar" %}
                         <strong>
-                            (ADMIN)
+                            (MILITAR)
                         </strong>
                     {% endif %}
                 </li>
                 {% endfor %}
             </ul>
-            <p>Explora mas <a href="/aviones">aqui</a>.</p>
         </main>
         <footer>
             <p>2024 Amador Fiol Borel</p>
