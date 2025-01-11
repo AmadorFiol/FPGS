@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Completar Tarea</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            <h1>Completar Tarea</h1>
+            <form action="/complete" method="POST">
+                <label for="nombre">Nombre de la tarea completada:</label>
+                <input type="text" id="nombre" name="nombre">
+                <button type="submit">Completar</button>
+            </form>
+            <h1>Tareas actuales</h1>
+            <ul>
+                {% for tarea in tareas %}
+                <li>
+                    {{tarea.name}}
+
+                    {% if tarea.is_completed %}
+                        - Completada
+                    {% else %}
+                        - No completada
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </main>
+        <footer>
+            <div>
+                <a href="/add">Añadir Tarea</a>.
+                <a href="/remove">Eliminar Tarea</a>.
+                <a href="/complete">Completar Tarea</a>.
+                <a href="/">Inicio</a>.
+            </div>
+            <p>2024 Amador Fiol Borel</p>
+        </footer>
+    </body>
+</html>
