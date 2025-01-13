@@ -9,7 +9,7 @@ class Radio():
         self.radio=radio
 
     def calcular_area(self):
-        return 2**self.radio*3.14
+        return self.radio**2*3.14
 
     def calcular_long(self):
         return 2*3.14*self.radio
