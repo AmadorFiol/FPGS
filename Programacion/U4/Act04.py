@@ -1,5 +1,17 @@
-#Crea un programa que cree una lista de coches.
-#Cada coche debe tener los datos establecidos en la actividad anterior
+'''
+Crea una clase llamada Coche que tenga los siguientes atributos:
+- marca: una cadena de caracteres
+- modelo: una cadena de caracteres
+- potencia: un número entero
+- color: una cadena de caracteres
+- matriculacion: número entero
+- siguiente_revision: número entero
+Define también los siguientes métodos:
+- mostrar(): muestra los datos del coche
+- acelerar(): incrementa la potencia del coche en 10 caballos
+- frenar(): decrementa la potencia del coche en 10 caballos
+- itv(): devuelve la fecha de la siguiente revisión teniendo en cuenta que se pasa la primera vez a los 4 años, después 2 años, otros 2 años y finalmente cada 1 año.
+'''
 import os
 from datetime import date
 
@@ -39,63 +51,34 @@ class Coche():
         return (f"La siguiente ITV se debe pasar en:{self.sigRev}")
 
 #-----Declaramos variables-----#
-listadoCoches=[
-    #Coche(marca,modelo,potencia,color,matriculacion)
-    Coche("Toyota","Corola",0,"Blanco",2022),
-    Coche("Skoda","Fabia",0,"Gris",2018),
-    Coche("Tesla","Cibertruck",0,"Gris",2023)
-]
-cocheSel=None
 salir=False
 
-#-----Declaramos funciones-----#
-def seleccionar_coche():
-    while(cocheSel==None):
-        for num,coche in enumerate(listadoCoches):
-            print(f"{num+1}. {coche.marca} {coche.modelo}")
-        userInput=int(input("Que coche vas a pillar? "))
-        if(userInput-1 not in range(0,len(listadoCoches))):
-            print("Esa opcion no esta en el listado")
-        else:
-            cocheSel=listadoCoches[userInput-1]
-
-def add_coche():
-    marca=input("De que marca es el coche? ")
-    modelo=input("Que modelo es? ")
-    color=input("De que color es? ")
-    matriculacion=int(input("En que año se matriculo? "))
-
-    listadoCoches.append(Coche(marca,modelo,0,color,matriculacion))
-
 #-----Main-----#
-seleccionar_coche()
+marca=input("De que marca es el coche? ")
+modelo=input("Que modelo es? ")
+color=input("De que color es? ")
+matriculacion=int(input("En que año se matriculo? "))
+
+cocheNuevo=Coche(marca,modelo,0,color,matriculacion)
 os.system("cls")
 while(salir==False):
     print("1. Mostrar información")
     print("2. Acelerar")
     print("3. Frenar")
     print("4. Revisar proxima ITV")
-    print("5. Seleccionar otro coche")
     print("S. Salir")
     match(input("Que quieres hacer? ")):
         case "1":
-            cocheSel.mostrar()
+            cocheNuevo.mostrar()
             os.system("pause")
         case "2":
-            print(cocheSel.acelerar())
+            print(cocheNuevo.acelerar())
             os.system("pause")
         case "3":
-            print(cocheSel.frenar())
+            print(cocheNuevo.frenar())
             os.system("pause") 
         case "4":
-            print(cocheSel.itv())
-            os.system("pause")
-        case "5":
-            cocheSel=None
-            seleccionar_coche()
-            os.system("pause")
-        case "6":
-            add_coche()
+            print(cocheNuevo.itv())
             os.system("pause")
         case "S":
             salir=True
