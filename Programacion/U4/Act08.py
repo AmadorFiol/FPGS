@@ -20,7 +20,52 @@ Debes utilizar la función randint() para generar números aleatorios que repres
 import os,random
 #-----Declaramos clases-----#
 class Personaje():
-    def __init__(self):
-        pass
+    def __init__(self,nombre,salud,defensa):
+        self.nombre=nombre
+        self.salud=salud
+        self.defensa=defensa
+        self.ataque=0
+
     def atacar(self,personaje):
-        pass
+        self.ataque=random.randint(0,10)
+        daño=self.ataque-personaje.defensa 
+        if daño<=0:
+            daño=0
+        personaje.salud=personaje.salud-daño
+
+        if personaje.salud<0:
+            personaje.salud=0
+        return daño
+
+#-----Declaramos variables-----#
+nombre=input("Cual sera el nombre de tu personaje? ")
+j1=Personaje(nombre,100,5)
+slime=Personaje("slime",100,5)
+
+#-----Main-----#
+while(j1.salud>0 and slime.salud>0):
+    os.system("cls")
+
+    daño=j1.atacar(slime)
+    if daño==0:
+        print("El slime a esquivado el ataque")
+    else:
+        print(f"{j1.nombre} ataca\nHa hecho {daño} de daño al slime enemigo")
+
+    if slime.salud==0:
+        print(f"\n{j1.nombre} ha derrotado al slime enemigo")
+        print(f"\nVida de {j1.nombre}: {j1.salud}     Vida del slime: {slime.salud}")
+        break
+
+    daño=slime.atacar(j1)
+    if daño==0:
+        print(f"{j1.nombre} a esquivado el ataque")
+    else:
+        print(f"El slime enemigo ataca\nHa hecho {daño} de daño al jugador {j1.nombre}")
+
+    print(f"\nVida de {j1.nombre}: {j1.salud}     Vida del slime: {slime.salud}")
+    
+    if j1.salud==0:
+        print(f"\nEl slime enemigo ha derrotado a {j1.nombre}")
+        break
+    os.system("pause")
