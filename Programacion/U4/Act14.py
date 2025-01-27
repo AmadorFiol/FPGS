@@ -12,6 +12,13 @@ Coloca al objeto enemigo en una posición del mapa (define x e y)
 Crea un bucle para mover al jugador hasta encontrar al enemigo.
 Cada paso que dé el jugador, debe aparecer por pantalla
 Si el enemigo choca contra el jugador, éste perderá la partida.
+Cambios dictados por el profesor:
+    nombre pasa a ser un atributo del Personaje
+    Jugador ahora tiene el atributo nMovimientos
+    Enemigo ahora tiene el metodo hablar()
+    El mapa ahora es de 5x5
+    Hacer cuando se encuentren iniciar la pelea
+    Crear GUI basica mostrando el mapa
 '''
 import os,random
 #-----Declaramos clases-----#
@@ -61,34 +68,58 @@ class Enemigo(Personaje):
     
 #-----Declaramos variables-----#
 j1=Jugador(0,0,"Amador")
-slime=Enemigo(random.randint(-5,6),random.randint(-5,6))
+slime=Enemigo(5,5)
+#slime=Enemigo(random.randint(-3,4),random.randint(-3,4))
+
+#-----Declaramos funciones-----#
+def show_mapa(posicionJugador):
+    borderLine="|-----|"
+    y=-3
+    for i in range(0,len(range(-3,4))):
+        for j in range(0,len(range(-3,4))):
+            print(borderLine,end="")
+        print("")
+        x=-3
+        for j in range(0,len(range(-3,4))):
+            
+            if posicionJugador==(x,y):
+                print("|  x  |",end="")
+            else:
+                print("|     |",end="")
+            x+=1
+        y+=1
+        print("")
+
 #-----Main-----#
 while(j1.x!=slime.x and j1.y!=slime.y): #Bucle de movimiento por el mapa
+    os.system("cls")
     print(f"Posicion actual de {j1.nombre}: {j1.x}:{j1.y}\nCantidad de movimientos realizados: {j1.nMovimientos}")
+    show_mapa((j1.x,j1.y))
+    print(f"\n{len(range(-3,4))}")#---------------------------------------------------------------DEBUG
     match(input("En que dirección te quieres mover? (Debes usar WASD)\n").upper()):
         case "W":
-            if j1.y<10:
+            if j1.y<3:
                 j1.mover_Arriba()
                 j1.nMovimientos+=1
             else:
                 print("Has chocado con un muro invisible")
                 os.system("pause")
         case "A":
-            if j1.x>-10:
+            if j1.x>-3:
                 j1.mover_Izquierda()
                 j1.nMovimientos+=1
             else:
                 print("Has chocado con un muro invisible")
                 os.system("pause")
         case "S":
-            if j1.y>-10:
+            if j1.y>-3:
                 j1.mover_Abajo()
                 j1.nMovimientos+=1
             else:
                 print("Has chocado con un muro invisible")
                 os.system("pause")
         case "D":
-            if j1.x<10:
+            if j1.x<3:
                 j1.mover_Derecha()
                 j1.nMovimientos+=1
             else:
@@ -97,7 +128,6 @@ while(j1.x!=slime.x and j1.y!=slime.y): #Bucle de movimiento por el mapa
         case _:
             print("Esa no es una opcion valida")
             os.system("pause")
-    os.system("cls")
 print(f"Posicion actual de {j1.nombre}: {j1.x}:{j1.y}")
 
 print(f"Te has encontrado con un {slime.nombre}!\n El slime ataca! {slime.hablar()}")
