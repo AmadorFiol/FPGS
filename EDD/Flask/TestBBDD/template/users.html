@@ -6,8 +6,11 @@
 <body>
     <h1>LISTA USARIOS</h1>
     <ul>
-        {% for user in users%}
+        {% for user in usersArray%}
         <li>ID: {{user.id}} - Nombre: {{user.name}} - Email {{user.email}}</li>
+        <form action="{{url_for('delete_user',user_id=user.id)}}" method="post">
+            <button type="submit">Eliminar</button>
+        </form>
         {% endfor %}
     </ul>
 </body>
