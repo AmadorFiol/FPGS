@@ -5,14 +5,17 @@ app = Flask(__name__)
 
 #-----Configuramos conexión a BBDD-----#
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///example.db'#Donde esta la BBDD
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False #Desactivar logs
-db=SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False #Desactivar logs
+db = SQLAlchemy(app)
 
 #-----Declaramos clases-----#
 class User(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(100), nullable=False)
     email=db.Column(db.String(100), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.name}>'
 
 #----Declaramos funciones/webs-----#
 @app.route("/users")
@@ -23,10 +26,10 @@ def get_users():
 
 @app.route("/user/add/<name>/<email>")
 def add_user(name,email):
-    new_user=User(name=name,email=email)
+    new_user = User(name=name, email=email)
     db.session.add(new_user)
     db.session.commit()
-    return f"Usuario {name} agregado correctamente"
+    return f"Usuario {name} añadido correctamente."
 
 @app.route("/user/<int:user_id>")
 def get_user_id(user_id):
@@ -56,7 +59,7 @@ def edit_user(user_id):
         user.email=request.form.get("email")
         db.session.commit()
         return redirect(url_for("users"))
-
+    return render_template('edit_user.html',user=user)
 #-----Main-----#
 if __name__=="__main__":
     with app.app_context():
