@@ -68,21 +68,19 @@ class Enemigo(Personaje):
     
 #-----Declaramos variables-----#
 j1=Jugador(0,0,"Amador")
-slime=Enemigo(5,5)
-#slime=Enemigo(random.randint(-3,4),random.randint(-3,4))
+slime=Enemigo(random.randint(-3,4),random.randint(-3,4))
 
 #-----Declaramos funciones-----#
 def show_mapa(posicionJugador):
-    borderLine="|-----|"
     y=-3
     for i in range(0,len(range(-3,4))):
         for j in range(0,len(range(-3,4))):
-            print(borderLine,end="")
+            print("|-----|",end="")
         print("")
         x=-3
         for j in range(0,len(range(-3,4))):
             
-            if posicionJugador==(x,y):
+            if posicionJugador==(x,y*-1):
                 print("|  x  |",end="")
             else:
                 print("|     |",end="")
@@ -95,7 +93,6 @@ while(j1.x!=slime.x and j1.y!=slime.y): #Bucle de movimiento por el mapa
     os.system("cls")
     print(f"Posicion actual de {j1.nombre}: {j1.x}:{j1.y}\nCantidad de movimientos realizados: {j1.nMovimientos}")
     show_mapa((j1.x,j1.y))
-    print(f"\n{len(range(-3,4))}")#---------------------------------------------------------------DEBUG
     match(input("En que dirección te quieres mover? (Debes usar WASD)\n").upper()):
         case "W":
             if j1.y<3:
