@@ -49,7 +49,7 @@ class CuentaRecompensas(CuentaBancaria):
         super().__init__(saldoInicial, nombre)
 
     def depositar_dinero(self, ingreso):
-        self.saldo+=(ingreso+(self.saldo*(5/100)))
+        self.saldo+=(ingreso+(ingreso*(5/100)))
 
 class CuentaAhorros(CuentaBancaria):
     def __init__(self, saldoInicial, nombre):
