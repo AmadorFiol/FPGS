@@ -8,7 +8,7 @@ class Pokemon:
         self.tipo=tipo
         self.ps=100
 
-    def AlmacenPokemon(nombre): #Funcion que actua como Pokedex
+    def AlmacenPokemon(nombre,pokemonsEnfrentados): #Funcion que actua como almacen_pokemon
         pokemonsEnfrentados.append(nombre)
 
     def get_nombre(self):
@@ -81,17 +81,13 @@ class Mapa():
             print("")
 
     def show_cell(self,x,y):
-        print(f"({x},{y}):{self.casillas[x][y]}")
+        print(f"({x},{y*-1}):{self.casillas[x][y]}")
 
     def asignPokemons(self):
-        num=random.randint(0,25)
-        for row in range(0,len(self.casillas)):
-            for cell in range(0,row):
-                while(cell==""):
-                    if num not in self.casillas:
-                        self.casillas[row][cell]=num
-                    else:
-                        num=random.randint(0,25)
+        for row in range(1,len(self.casillas)+1):
+            for cell in range(1,row+1):
+                num=random.randint(0,len(almacen_pokemon))
+                self.casillas[row-1][cell-1]=num
 
 class Personaje:
     def __init__(self,x,y):
@@ -145,17 +141,32 @@ def user_moving():
             print("Esa no es una opcion valida")
 #-----Declaramos variables-----#
 salir=False
-pokemonsEnfrentados=()
 mapa=Mapa(5)
 j1=Jugador(0,0,"Amador")
-pokedex=[]
+almacen_pokemon=[]
 equipo=[0,1,2,3,4,5,6]
 #-----Main-----#
-with open("pokedex.txt") as archivo:
-    for linea in archivo:
-        new=linea.split(",")
-        pokedex.append(Pokemon(new[0],new[2],new[3],new[1]))
+with open("./pokedex.txt") as file:
+    for line in file:
+        newPokeInfo=line.split(",")
+        match(newPokeInfo[1]):
+            case "Fuego":
+                almacen_pokemon.append(PokemonFuego(newPokeInfo[0],newPokeInfo[2],newPokeInfo[3],newPokeInfo[1]))
+            case "Agua":
+                almacen_pokemon.append(PokemonAgua(newPokeInfo[0],newPokeInfo[2],newPokeInfo[3],newPokeInfo[1]))
+            case "Planta":
+                almacen_pokemon.append(PokemonPlanta(newPokeInfo[0],newPokeInfo[2],newPokeInfo[3],newPokeInfo[1]))
+            case "Volador":
+                almacen_pokemon.append(PokemonVolador(newPokeInfo[0],newPokeInfo[2],newPokeInfo[3],newPokeInfo[1]))
+
 mapa.asignPokemons()
+#-----Debugging-----#
+for row in mapa.casillas:
+    print(row)
+    for cell in row:
+        print(cell)
+#-----EndDebugging-----#
+'''
 while(salir==False):
     os.system('cls')
     print(f"Posicion actual de {j1.nombre}: {j1.x}:{j1.y}")
@@ -171,7 +182,7 @@ while(salir==False):
             user_moving()
             os.system('pause')
         case "2":
-            mapa.show_cell(j1.x,j1.y)
+            mapa.show_cell(j1.x,j1.y*-1)
             os.system('pause')
         case "3":
             pass
@@ -181,3 +192,5 @@ while(salir==False):
             salir=True
         case _:
             print("Esa no es una opcion valida")
+
+'''
