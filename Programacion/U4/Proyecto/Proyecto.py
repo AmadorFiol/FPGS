@@ -62,9 +62,9 @@ class PokemonVolador(Pokemon):
 
 class Mapa():
     def __init__(self,lado):
-        self.casillas=[[""]*lado]*lado
+        self.casillas=[["-"] * lado for _ in range(lado)]
 
-    def show_realtime_map(self,playerPosition):
+    def show_minimap(self,playerPosition):
         y=0
         for row in self.casillas:
             for cell in row:
@@ -80,14 +80,25 @@ class Mapa():
             y+=1
             print("")
 
-    def show_cell(self,x,y):
-        print(f"({x},{y*-1}):{self.casillas[x][y]}")
+    def show_cell_info(self,x,y):
+        print(f"({x},{y}):{almacen_pokemon[self.casillas[y][x]].get_nombre()}")
 
+    def show_coords_map(self):
+        for row in range(0,len(self.casillas)): 
+            for cell in range(0,len(self.casillas[row])):
+                print(f"({cell}:{row*-1})",end="")
+            print("")
+
+    def show_full_map_info(self):
+        for row in range(0,len(self.casillas)):
+            for cell in range(0,len(self.casillas[row])):
+                print(f"({cell}:{row*-1}):{almacen_pokemon[self.casillas[row][cell]].get_nombre()}, ",end="")
+            print("")
+    
     def asignPokemons(self):
-        for row in range(1,len(self.casillas)+1):
-            for cell in range(1,row+1):
-                num=random.randint(0,len(almacen_pokemon))
-                self.casillas[row-1][cell-1]=num
+        for row in range(0,len(self.casillas)): 
+            for cell in range(0,len(self.casillas[row])):
+                self.casillas[row][cell]=random.randint(0, len(almacen_pokemon)-1)
 
 class Personaje:
     def __init__(self,x,y):
@@ -112,39 +123,51 @@ class Jugador(Personaje):
         self.nombre=nombre
 
 #-----Declaramos funciones-----#
-def combat():
-    pass
+def pokemon_battle(x,y):
+    pokemon_rival=almacen_pokemon[map.casillas[y][x]]
+    os.system('cls')
+    
 
 def user_moving():
     match(input("En que dirección te quieres mover?\n(Debes usar WASD para moverte o X para salir)\n").upper()):
         case "W":
             if j1.y<0:
                 j1.mover_Arriba()
+                return True
             else:
                 print("Has chocado con un muro invisible")
+                return False
         case "A":
             if j1.x>0:
                 j1.mover_Izquierda()
+                return True
             else:
                 print("Has chocado con un muro invisible")
+                return False
         case "S":
             if j1.y>-4:
                 j1.mover_Abajo()
+                return True
             else:
                 print("Has chocado con un muro invisible")
+                return False
         case "D":
             if j1.x<4:
                 j1.mover_Derecha()
+                return True
             else:
                 print("Has chocado con un muro invisible")
+                return False
         case _:
             print("Esa no es una opcion valida")
+            return False
 #-----Declaramos variables-----#
 salir=False
-mapa=Mapa(5)
+map=Mapa(5)
 j1=Jugador(0,0,"Amador")
 almacen_pokemon=[]
-equipo=[0,1,2,3,4,5,6]
+#El jugador inicia con un bulbasaur, luego agregare la opcion de elegir el inicial
+team=[3]
 #-----Main-----#
 with open("./pokedex.txt") as file:
     for line in file:
@@ -159,18 +182,15 @@ with open("./pokedex.txt") as file:
             case "Volador":
                 almacen_pokemon.append(PokemonVolador(newPokeInfo[0],newPokeInfo[2],newPokeInfo[3],newPokeInfo[1]))
 
-mapa.asignPokemons()
+map.asignPokemons()
 #-----Debugging-----#
-for row in mapa.casillas:
-    print(row)
-    for cell in row:
-        print(cell)
-#-----EndDebugging-----#
-'''
+
+#-----FIN DEBUG-----#
+
 while(salir==False):
     os.system('cls')
     print(f"Posicion actual de {j1.nombre}: {j1.x}:{j1.y}")
-    mapa.show_realtime_map((j1.x,j1.y))
+    map.show_minimap((j1.x,j1.y))
     print("Que quieres hacer?")
     print("1. Moverse por el mapa")
     print("2. Ver informacion de la posicion actual")
@@ -179,18 +199,28 @@ while(salir==False):
     print("S. Salir")
     match(input("")):
         case "1":
-            user_moving()
+            user_moved=user_moving()
             os.system('pause')
+            if user_moved:
+                print(f"Te has encontrado un {almacen_pokemon[map.casillas[j1.y][j1.x]].get_name()} salvaje")
+                match(input("Quieres combatirlo?(Y/N) ").upper):
+                    case "Y":
+                        pass
+                    case "N":
+                        pass
+                    case _:
+                        pass
+                pokemon_battle(j1.x,j1.y)
         case "2":
-            mapa.show_cell(j1.x,j1.y*-1)
+            map.show_cell_info(j1.x,j1.y)
             os.system('pause')
         case "3":
-            pass
+            map.show_coords_map()
+            os.system('pause')
         case "4":
-            pass
+            map.show_full_map_info()
+            os.system('pause')
         case "S":
             salir=True
         case _:
             print("Esa no es una opcion valida")
-
-'''
