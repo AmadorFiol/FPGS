@@ -1,4 +1,9 @@
 import os,random
+
+# Error donde la posicion de los pokemon mostrada en la funcion
+# Mapa.show_full_map() no coincide con la posicion de ese 
+# pokemon
+
 #-----Declaramos clases-----#
 class Pokemon:
     def __init__(self,nombre,defensa,ataque,tipo):
@@ -8,7 +13,7 @@ class Pokemon:
         self.tipo=tipo
         self.ps=100
 
-    def AlmacenPokemon(nombre,pokemonsEnfrentados): #Funcion que actua como almacen_pokemon
+    def AlmacenPokemon(nombre,pokemonsEnfrentados):
         pokemonsEnfrentados.append(nombre)
 
     def get_nombre(self):
@@ -98,7 +103,7 @@ class Mapa():
     def asignPokemons(self):
         for row in range(0,len(self.casillas)): 
             for cell in range(0,len(self.casillas[row])):
-                self.casillas[row][cell]=random.randint(0, len(almacen_pokemon)-1)
+                self.casillas[row][cell]=random.randint(0, len(almacen_pokemon)-2)
 
 class Personaje:
     def __init__(self,x,y):
@@ -123,10 +128,10 @@ class Jugador(Personaje):
         self.nombre=nombre
         #El jugador inicia con un bulbasaur, luego agregare la opcion de elegir el inicial
         self.team=[2]
-        self.pokemonBox=[]
+        self.pokemonBox=[] #Lugar donde se almacenan los pokemons que no entran en el equipo
 
 #-----Declaramos funciones-----#
-def upload_pokemon_list():
+def download_pokemon_list():
     with open("./pokedex.txt") as file:
         for line in file:
             newPokeInfo=line.split(",")
@@ -139,44 +144,45 @@ def upload_pokemon_list():
                     almacen_pokemon.append(PokemonPlanta(newPokeInfo[0],int(newPokeInfo[2]),int(newPokeInfo[3]),newPokeInfo[1]))
                 case "Volador":
                     almacen_pokemon.append(PokemonVolador(newPokeInfo[0],int(newPokeInfo[2]),int(newPokeInfo[3]),newPokeInfo[1]))
+    almacen_pokemon.append(Pokemon("Ninguno",0,0,"Ninguno"))
 
 def change_pokemon():
     pokemon_changed=False
     while(not pokemon_changed):
         print("Que pokemon vas a sacar?")
-        for i,pokemon in enumerate(j1.team):
+        for i,pokemon in enumerate(player.team):
             print(f"{i}. {almacen_pokemon[pokemon].get_nombre()}")
             match(input("")):
                 case "1":
                     if almacen_pokemon[0].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
                     else:
-                        return j1.team[0]
+                        return player.team[0]
                 case "2":
                     if almacen_pokemon[1].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
                     else:
-                        return j1.team[1]
+                        return player.team[1]
                 case "3":
                     if almacen_pokemon[2].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
                     else:
-                        return j1.team[2]
+                        return player.team[2]
                 case "4":
                     if almacen_pokemon[3].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
                     else:
-                        return j1.team[3]
+                        return player.team[3]
                 case "5":
                     if almacen_pokemon[4].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
                     else:
-                        return j1.team[4]
+                        return player.team[4]
                 case "6":
                     if almacen_pokemon[5].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
                     else:
-                        return j1.team[5]
+                        return player.team[5]
                 case _:
                     print("Esa no es una opcion valida")
                     os.system('pause')
@@ -184,41 +190,54 @@ def change_pokemon():
 def change_passedOut_pokemon():
     pokemon_changed=False
     while(not pokemon_changed):
+        os.system('cls')
         print("Que pokemon vas a sacar?")
-        for i,pokemon in enumerate(j1.team):
+        for i,pokemon in enumerate(player.team):
             print(f"{i}. {almacen_pokemon[pokemon].get_nombre()}")
             print("X. Volver")
             match(input("")):
                 case "1":
                     if almacen_pokemon[0].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
+                        os.system('pause')
+                        os.system('cls')
                     else:
-                        return j1.team[0]
+                        return player.team[0]
                 case "2":
                     if almacen_pokemon[1].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
+                        os.system('pause')
+                        os.system('cls')
                     else:
-                        return j1.team[1]
+                        return player.team[1]
                 case "3":
                     if almacen_pokemon[2].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
+                        os.system('pause')
+                        os.system('cls')
                     else:
-                        return j1.team[2]
+                        return player.team[2]
                 case "4":
                     if almacen_pokemon[3].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
+                        os.system('pause')
+                        os.system('cls')
                     else:
-                        return j1.team[3]
+                        return player.team[3]
                 case "5":
                     if almacen_pokemon[4].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
+                        os.system('pause')
+                        os.system('cls')
                     else:
-                        return j1.team[4]
+                        return player.team[4]
                 case "6":
                     if almacen_pokemon[5].get_ps()==0:
                         print("Este pokemon esta debilitado y no puede batallar")
+                        os.system('pause')
+                        os.system('cls')
                     else:
-                        return j1.team[5]
+                        return player.team[5]
                 case "X":
                         return False
                 case _:
@@ -226,7 +245,7 @@ def change_passedOut_pokemon():
                     os.system('pause')
 
 def atack(atack,rival):
-        damage=atack-rival.defensa 
+        damage=atack+10-rival.defensa 
         if damage<=0:
             damage=0
         rival.set_ps(rival.ps-damage)
@@ -238,15 +257,15 @@ def atack(atack,rival):
 def catch_pokemon(atack,rival):
     chance=(atack-rival.defensa)*(100-rival.ps)
     if random.randint(0,100)>chance:
-        if len(j1.team)<6:
-            j1.team.append(rival)
+        if len(player.team)<6:
+            player.team.append(rival)
         else:
-            j1.pokemonBox.append(rival)
+            player.pokemonBox.append(rival)
         return True
 
 def pokemon_battle(x,y):
     rival=almacen_pokemon[map.casillas[y][x]]
-    pokemon_in_battle=almacen_pokemon[j1.team[0]]
+    pokemon_in_battle=almacen_pokemon[player.team[0]]
     os.system('cls')
     while(rival.ps>0):
         action_made=False
@@ -279,20 +298,26 @@ def pokemon_battle(x,y):
                                 atack_decided=True
                             case _:
                                 print("Esa no es una opcion valida")
-                                os.system('pause')
+                        os.system('pause')
+                        os.system('cls')
                     if rival.ps==0:
                         print(f"El {rival.nombre} se ha debilitado")
-                        map.casillas[y][x]=None
+                        map.casillas[y][x]=len(almacen_pokemon)-1
                         os.system('pause')
                         return
                 case "2":
                     if change_pokemon()!=False:
                         action_made=True
+                        os.system('pause')
+                        os.system('cls')
+                    
                 case "3":
                     if catch_pokemon(pokemon_in_battle.ataque,rival):
                         print(f"Enhorabuena, el {rival.nombre} ha sido capturado")
-                        map.casillas[y][x]=None
+                        map.casillas[y][x]=len(almacen_pokemon)-1
                         action_made=True
+                        os.system('pause')
+                        os.system('cls')
                         return
                 case "4":
                     action_made=True
@@ -300,7 +325,7 @@ def pokemon_battle(x,y):
                 case _:
                     print("Esa no es una opcion valida")    
 
-        atack(rival.ataque,pokemon_in_battle)
+        damage=atack(rival.ataque,pokemon_in_battle)
         print(f"El {rival.nombre} rival ha hecho {damage} de daño a tu {pokemon_in_battle.nombre}")
         if pokemon_in_battle.ps==0:
             pokemon_in_battle=change_passedOut_pokemon()
@@ -309,29 +334,29 @@ def pokemon_battle(x,y):
 def user_moving():
     match(input("En que dirección te quieres mover?\n(Debes usar WASD para moverte o X para salir)\n").upper()):
         case "W":
-            if j1.y<0:
-                j1.mover_Arriba()
+            if player.y<0:
+                player.mover_Arriba()
                 return True
             else:
                 print("Has chocado con un muro invisible")
                 return False
         case "A":
-            if j1.x>0:
-                j1.mover_Izquierda()
+            if player.x>0:
+                player.mover_Izquierda()
                 return True
             else:
                 print("Has chocado con un muro invisible")
                 return False
         case "S":
-            if j1.y>-4:
-                j1.mover_Abajo()
+            if player.y>-4:
+                player.mover_Abajo()
                 return True
             else:
                 print("Has chocado con un muro invisible")
                 return False
         case "D":
-            if j1.x<4:
-                j1.mover_Derecha()
+            if player.x<4:
+                player.mover_Derecha()
                 return True
             else:
                 print("Has chocado con un muro invisible")
@@ -342,15 +367,15 @@ def user_moving():
 #-----Declaramos variables-----#
 salir=False
 map=Mapa(5)
-j1=Jugador(0,0,"Amador")
+player=Jugador(0,0,"Amador")
 almacen_pokemon=[]
 #-----Main-----#
-upload_pokemon_list()
+download_pokemon_list()
 map.asignPokemons()
 while(not salir):
     os.system('cls')
-    print(f"Posicion actual de {j1.nombre}: {j1.x}:{j1.y}")
-    map.show_minimap((j1.x,j1.y))
+    print(f"Posicion actual de {player.nombre}: {player.x}:{player.y}")
+    map.show_minimap((player.x,player.y))
     print("Que quieres hacer?")
     print("1. Moverse por el mapa")
     print("2. Ver informacion de la posicion actual")
@@ -361,23 +386,26 @@ while(not salir):
         case "1":
             user_moved=user_moving()
             os.system('pause')
-            if user_moved:
-                print(f"Te has encontrado un {almacen_pokemon[map.casillas[j1.y][j1.x]].nombre} salvaje")
-                match(input("Quieres combatirlo?(Y/N) ").upper):
+            if almacen_pokemon[map.casillas[player.y][player.x]].nombre=="Ninguno":
+                pass
+            elif user_moved:
+                print(f"Te has encontrado un {almacen_pokemon[map.casillas[player.y][player.x]].nombre} salvaje")
+                match(input("Quieres combatirlo?(Y/N) ").upper()):
                     case "Y":
-                        pass
+                        pokemon_battle(player.x,player.y)
                     case "N":
                         pass
                     case _:
-                        pass
-                pokemon_battle(j1.x,j1.y)
+                       print("Algo ha ido mal")
+                       os.system('pause')
         case "2":
-            map.show_cell_info(j1.x,j1.y)
+            map.show_cell_info(player.x,player.y)
             os.system('pause')
         case "3":
             map.show_coords_map()
             os.system('pause')
         case "4":
+            print(f"Y:{player.y},X:{player.x}\n{map.casillas[player.y][player.x]}")
             map.show_full_map_info()
             os.system('pause')
         case "S":
