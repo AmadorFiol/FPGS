@@ -1,9 +1,5 @@
 import os,random
 
-# Error donde la posicion de los pokemon mostrada en la funcion
-# Mapa.show_full_map() no coincide con la posicion de ese 
-# pokemon
-
 #-----Declaramos clases-----#
 class Pokemon:
     def __init__(self,nombre,defensa,ataque,tipo):
@@ -386,26 +382,25 @@ while(not salir):
         case "1":
             user_moved=user_moving()
             os.system('pause')
-            if almacen_pokemon[map.casillas[player.y][player.x]].nombre=="Ninguno":
+            if almacen_pokemon[map.casillas[player.y*-1][player.x]].nombre=="Ninguno":
                 pass
             elif user_moved:
-                print(f"Te has encontrado un {almacen_pokemon[map.casillas[player.y][player.x]].nombre} salvaje")
+                print(f"Te has encontrado un {almacen_pokemon[map.casillas[player.y*-1][player.x]].nombre} salvaje")
                 match(input("Quieres combatirlo?(Y/N) ").upper()):
                     case "Y":
-                        pokemon_battle(player.x,player.y)
+                        pokemon_battle(player.x,player.y*-1)
                     case "N":
                         pass
                     case _:
                        print("Algo ha ido mal")
                        os.system('pause')
         case "2":
-            map.show_cell_info(player.x,player.y)
+            map.show_cell_info(player.x,player.y*-1)
             os.system('pause')
         case "3":
             map.show_coords_map()
             os.system('pause')
         case "4":
-            print(f"Y:{player.y},X:{player.x}\n{map.casillas[player.y][player.x]}")
             map.show_full_map_info()
             os.system('pause')
         case "S":
