@@ -9,9 +9,6 @@ class Pokemon:
         self.tipo=tipo
         self.ps=100
 
-    def AlmacenPokemon(nombre,pokemonsEnfrentados):
-        pokemonsEnfrentados.append(nombre)
-
     def get_nombre(self):
         return self.nombre
     
@@ -39,7 +36,8 @@ class PokemonPlanta(Pokemon):
 
     def ataque_especial(self,rival):
         print(f"Tu {self.nombre} ha usado su ataque especial \"Megaton Floral\"")
-        damage=self.ataque+50-rival.defensa 
+        atack=self.ataque*get_type_advantage(self.tipo,rival.tipo)
+        damage=atack+50-rival.defensa 
         if damage<=0:
             damage=0
         rival.set_ps(rival.ps-damage)
@@ -54,7 +52,8 @@ class PokemonAgua(Pokemon):
     
     def ataque_especial(self,rival):
         print(f"Tu {self.nombre} ha usado su ataque especial \"Hidrovortice Abisal\"")
-        damage=self.ataque+50-rival.defensa 
+        atack=self.ataque*get_type_advantage(self.tipo,rival.tipo)
+        damage=atack+50-rival.defensa 
         if damage<=0:
             damage=0
         rival.set_ps(rival.ps-damage)
@@ -69,7 +68,8 @@ class PokemonFuego(Pokemon):
     
     def ataque_especial(self,rival):
         print(f"Tu {self.nombre} ha usado su ataque especial \"Hecatombe Pirica\"")
-        damage=self.ataque+50-rival.defensa 
+        atack=self.ataque*get_type_advantage(self.tipo,rival.tipo)
+        damage=atack+50-rival.defensa 
         if damage<=0:
             damage=0
         rival.set_ps(rival.ps-damage)
@@ -84,7 +84,8 @@ class PokemonVolador(Pokemon):
     
     def ataque_especial(self,rival):
         print(f"Tu {self.nombre} ha usado su ataque especial \"Picado Supersonico\"")
-        damage=self.ataque+50-rival.defensa 
+        atack=self.ataque*get_type_advantage(self.tipo,rival.tipo)
+        damage=atack+50-rival.defensa 
         if damage<=0:
             damage=0
         rival.set_ps(rival.ps-damage)
@@ -115,7 +116,7 @@ class Mapa():
             print("")
 
     def show_cell_info(self,x,y):
-        print(f"({x},{y}):{almacenPokemon[self.casillas[y][x]].get_nombre()}")
+        print(f"({x},{y*-1}):{almacenPokemon[self.casillas[y][x]].get_nombre()}")
 
     def show_coords_map(self):
         for row in range(0,len(self.casillas)): 
@@ -129,7 +130,7 @@ class Mapa():
                 print(f"({cell}:{row*-1}):{almacenPokemon[self.casillas[row][cell]].get_nombre()}, ",end="")
             print("")
     
-    def asignPokemons(self):
+    def asign_pokemons(self):
         for row in range(0,len(self.casillas)): 
             for cell in range(0,len(self.casillas[row])):
                 self.casillas[row][cell]=random.randint(0, len(almacenPokemon)-2)
@@ -159,20 +160,79 @@ class Jugador(Personaje):
         self.pokemonBox=[] #Lugar donde se almacenan los pokemons que no entran en el equipo
 
 #-----Declaramos funciones-----#
+def get_type_advantage(type,rivalType):
+    match(type):
+        case "Fuego":
+            match(rivalType):
+                case "Agua":
+                    return 0.5
+                case "Planta":
+                    return 2
+                case "Volador":
+                    return 2
+                case _:
+                    return 1
+        case "Agua":
+            match(rivalType):
+                case "Fuego":
+                    return 2
+                case "Planta":
+                    return 0.5
+                case _:
+                    return 1
+        case "Planta":
+            match(rivalType):
+                case "Fuego":
+                    return 0.5
+                case "Agua":
+                    return 2
+                case "Volador":
+                    return 0.5
+                case _:
+                    return 1
+        case "Volador":
+            match(rivalType):
+                case "Fuego":
+                    return 0.5
+                case "Planta":
+                    return 2
+                case _:
+                    return 1
+
 def download_pokemon_list():
+    contadorFuego=0
+    contadorAgua=0
+    contadorPlanta=0
+    contadorVolador=0
     with open("./pokedex.txt") as file:
         for line in file:
-            NewPokemonInfo=line.split(",")
-            match(NewPokemonInfo[1]):
+            newPokemonInfo=line.split(",")
+            match(newPokemonInfo[1]):
                 case "Fuego":
-                    almacenPokemon.append(PokemonFuego(NewPokemonInfo[0],int(NewPokemonInfo[2]),int(NewPokemonInfo[3]),NewPokemonInfo[1]))
+                    almacenPokemon.append(PokemonFuego(newPokemonInfo[0],int(newPokemonInfo[2]),int(newPokemonInfo[3]),newPokemonInfo[1]))
+                    print(f"{newPokemonInfo[0]}, de tipo fuego, eficaz contra fuego y volador aunque debil contra agua")
+                    contadorFuego+=1
                 case "Agua":
-                    almacenPokemon.append(PokemonAgua(NewPokemonInfo[0],int(NewPokemonInfo[2]),int(NewPokemonInfo[3]),NewPokemonInfo[1]))
+                    almacenPokemon.append(PokemonAgua(newPokemonInfo[0],int(newPokemonInfo[2]),int(newPokemonInfo[3]),newPokemonInfo[1]))
+                    print(f"{newPokemonInfo[0]}, de tipo agua, eficaz contra fuego aunque debil contra planta")
+                    contadorAgua+=1
                 case "Planta":
-                    almacenPokemon.append(PokemonPlanta(NewPokemonInfo[0],int(NewPokemonInfo[2]),int(NewPokemonInfo[3]),NewPokemonInfo[1]))
+                    almacenPokemon.append(PokemonPlanta(newPokemonInfo[0],int(newPokemonInfo[2]),int(newPokemonInfo[3]),newPokemonInfo[1]))
+                    print(f"{newPokemonInfo[0]}, de tipo planta, eficaz contra agua aunque debil contra fuego y volador")
+                    contadorPlanta+=1
                 case "Volador":
-                    almacenPokemon.append(PokemonVolador(NewPokemonInfo[0],int(NewPokemonInfo[2]),int(NewPokemonInfo[3]),NewPokemonInfo[1]))
+                    almacenPokemon.append(PokemonVolador(newPokemonInfo[0],int(newPokemonInfo[2]),int(newPokemonInfo[3]),newPokemonInfo[1]))
+                    print(f"{newPokemonInfo[0]}, de tipo volador, eficaz contra planta aunque debil contra fuego")
+                    contadorVolador+=1
+            os.system('pause')
     almacenPokemon.append(Pokemon("Ninguno",0,999,"Ninguno"))
+    os.system('cls')
+    print(f"Se han cargado {contadorFuego} pokemons de tipo fuego")
+    print(f"Se han cargado {contadorAgua} pokemons de tipo agua")
+    print(f"Se han cargado {contadorPlanta} pokemons de tipo planta")
+    print(f"Se han cargado {contadorVolador} pokemons de tipo volador")
+    os.system('pause')
+    os.system('cls')
 
 #No hay control de errores en cuanto que pasaria si el jugador
 #escoge una de las opciones en las que no hay pokemon
@@ -220,7 +280,7 @@ def change_pokemon():
                 else:
                     pokemonChanged=True
                     return player.team[5]
-            case "X":
+            case "X"|"x":
                 pokemonChanged=True
                 return False
             case _:
@@ -290,7 +350,8 @@ def change_passedOut_pokemon():
         os.system('pause')
         os.system('cls')
 
-def atack(atack,rival):
+def atack(yourPokemon,rival):
+        atack=yourPokemon.ataque*get_type_advantage(yourPokemon.tipo,rival.tipo)
         damage=atack+10-rival.defensa 
         if damage<=0:
             damage=0
@@ -332,7 +393,7 @@ def pokemon_battle(x,y):
                         print("X. Volver")
                         match(input("")):
                             case "1": #Ataque Basico
-                                damage=atack(pokemonInBattle.ataque,rival)
+                                damage=atack(pokemonInBattle,rival)
                                 print(f"Tu {pokemonInBattle.nombre} ha hecho {damage} de daño al {rival.nombre} rival")
                                 atackDecided=True
                                 actionMade=True
@@ -341,7 +402,7 @@ def pokemon_battle(x,y):
                                 print(f"Tu {pokemonInBattle.nombre} ha hecho {damage} de daño al {rival.nombre} rival")
                                 atackDecided=True
                                 actionMade=True
-                            case "X":
+                            case "X"|"x":
                                 atackDecided=True
                             case _:
                                 print("Esa no es una opcion valida")
@@ -384,7 +445,7 @@ def pokemon_battle(x,y):
                     print("Esa no es una opcion valida")    
 
         #Turno del rival
-        damage=atack(rival.ataque,pokemonInBattle)
+        damage=atack(rival,pokemonInBattle)
         print(f"El {rival.nombre} rival ha hecho {damage} de daño a tu {pokemonInBattle.nombre}")
 
         #Si te debilitan un pokemon
@@ -463,7 +524,7 @@ player=Jugador(0,0,"")
 almacenPokemon=[]
 #-----Main-----#
 download_pokemon_list()
-map.asignPokemons()
+map.asign_pokemons()
 player.nombre=input("Cual es tu nombre? ")
 choose_starter_pokemon()
 while(not salir):
@@ -507,7 +568,7 @@ while(not salir):
                 pokemon.set_ps(100)
             print("Tus pokemons han sido curados")
             os.system('pause')
-        case "S":
+        case "S"|"s":
             salir=True
         case _:
             print("Esa no es una opcion valida")
