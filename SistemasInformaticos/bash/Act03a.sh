@@ -6,13 +6,12 @@ sum=0
 #Bucle principal
 while [ "$#" -gt "0" ]; do
 	let i=$i+1
-	let suma=$suma+$1
+	let sum=$sum+$1
 	#Comparacion
 	if [ $1 -gt $mayor ]; then
 		mayor=$1
-	else if [ $1 -lt $menor ]; then
+	elif [ $1 -lt $menor ]; then
 		menor=$1
-	fi
 	fi
 	shift
 done
@@ -20,4 +19,4 @@ done
 echo "Se han introducido $i numeros"
 echo "El numero menor es $menor"
 echo "El numero mayor es $mayor"
-echo "La suma de todos los numeros es $suma"
+echo "La suma de todos los numeros es $sum"
