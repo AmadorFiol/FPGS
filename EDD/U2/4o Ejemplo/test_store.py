@@ -57,7 +57,7 @@ class TestStore(unittest.TestCase):
         self.assertEqual(self.store.get_product_info("Product"),product)
 
     #PURCHASE_PRODUCT
-    #Test 98: purchase none existent product or not suffice stock
+    #Test 9: purchase none existent product or not suffice stock
     def test_purchase_noneExistent_product(self):
         self.assertFalse(self.store.purchase_product("Product",1))
         self.store.add_product("Product",1000,5)
