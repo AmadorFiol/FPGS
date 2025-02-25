@@ -1,0 +1,38 @@
+/*Reset CSS*/
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/*Otros*/
+body{
+    background-color: black;
+}
+nav{
+    background-color: dimgray;
+    text-align: center;
+}
+.menu{
+    list-style: none; /*Los elementos de la lista no tendran el puntito*/
+    display: flex; /*La bara se pone en horizontal*/
+    justify-content: center;/*Centrar el texto*/
+    gap: 30px;
+}
+
+.menu li{
+    position: relative;
+}
+
+.menu a{
+    color: yellow;
+}
+
+.submenu{
+    list-style: none;
+    justify-content: center;
+    gap: 30px;
+}
+
+.submenu a{
+    color: yellow;
+}
