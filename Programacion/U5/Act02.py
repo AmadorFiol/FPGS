@@ -1,3 +1,6 @@
+'''
+Hacer que el cuadrado rebote en las paredes
+'''
 import pygame
 from pygame.locals import *
 import sys
@@ -27,7 +30,7 @@ def main():
         screen.fill(BLACK)
         #Posibles entradas del teclado y mouse
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type==pygame.QUIT:
                 sys.exit()
         
         #Dibujamos las figuras
