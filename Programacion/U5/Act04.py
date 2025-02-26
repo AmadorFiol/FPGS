@@ -34,7 +34,11 @@ def main():
                 sys.exit()
             elif event.type==pygame.KEYDOWN:
                 #Movimientos a traves de un input de tecla
-                while (event.type==pygame.KEYDOWN):
+                
+                #Como hago para mover manteniendo pulsado la tecla
+                    #While tipo evento no es levantar tecla - No funcionado
+                    #While tipo evento es pulsado tecla - No funcionado
+                while(event.type==pygame.KEYDOWN):
                     match(event.key):
                         case pygame.K_w:
                             if y<=0:
