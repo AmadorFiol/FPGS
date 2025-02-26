@@ -6,11 +6,13 @@
 }
 /*Otros*/
 body{
-    background-color: black;
+    font-family: 'Poppins', sans-serif;
 }
 nav{
+    width: 100%;
     background-color: dimgray;
     text-align: center;
+    position: fixed
 }
 .menu{
     list-style: none; /*Los elementos de la lista no tendran el puntito*/
@@ -23,16 +25,8 @@ nav{
     position: relative;
 }
 
-.menu a{
-    color: yellow;
-}
-
 .submenu{
     list-style: none;
     justify-content: center;
     gap: 30px;
-}
-
-.submenu a{
-    color: yellow;
 }
