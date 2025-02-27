@@ -36,9 +36,6 @@ def main():
         
         #Dibujamos las figuras
         pygame.draw.rect(screen, RED, (x, y, 100, 100))
-        pygame.draw.circle(screen, GREEN, (200, 200), 50)
-        pygame.draw.polygon(screen, BLUE, [(300, 300), (350, 250), (400, 300)])
-        pygame.draw.line(screen, (255, 255, 0), (100, 400), (400, 400), 5)
 
         #Agregamos movimiento a uno de los objetos
         match(mov):

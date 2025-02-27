@@ -19,6 +19,8 @@ def main():
     #-----Definir variables-----#
     x=0
     y=0
+    width=100
+    height=100
 
     pygame.init()
     #Creacion y titulacion de la ventana
@@ -34,39 +36,39 @@ def main():
                 sys.exit()
             elif event.type==pygame.KEYDOWN:
                 #Movimientos a traves de un input de tecla
-                
-                #Como hago para mover manteniendo pulsado la tecla
-                    #While tipo evento no es levantar tecla - No funcionado
-                    #While tipo evento es pulsado tecla - No funcionado
-                while(event.type==pygame.KEYDOWN):
-                    match(event.key):
-                        case pygame.K_w:
-                            if y<=0:
-                                y=0
-                            else:
-                                y-=10
-                        case pygame.K_a:
-                            if x<=0:
-                                x=0
-                            else:
-                                x-=10
-                        case pygame.K_s:
-                            if y>=SCREEN_HEIGHT-100:
-                                y=SCREEN_HEIGHT-100
-                            else:
-                                y+=10
-                        case pygame.K_d:
-                            if x>=SCREEN_WIDTH-100:
-                                x=SCREEN_WIDTH-100
-                            else:
-                                x+=10
-        
+                match(event.key):
+                    case pygame.K_w:
+                        if y<=0:
+                            y=0
+                        else:
+                            y-=10
+                    case pygame.K_a:
+                        if x<=0:
+                            x=0
+                        else:
+                            x-=10
+                    case pygame.K_s:
+                        if y>=SCREEN_HEIGHT-100:
+                            y=SCREEN_HEIGHT-100
+                        else:
+                            y+=10
+                    case pygame.K_d:
+                        if x>=SCREEN_WIDTH-100:
+                            x=SCREEN_WIDTH-100
+                        else:
+                            x+=10
+                    case pygame.K_PLUS:
+                        width+=50
+                        height+=50
+                    case pygame.K_MINUS:
+                        if width<=0 and height<=0:
+                            pass
+                        else:
+                            width-=50
+                            height-=50
+
         #Dibujamos las figuras
-        pygame.draw.rect(screen, RED, (x, y, 100, 100))
-        pygame.draw.circle(screen, GREEN, (200, 200), 50)
-        pygame.draw.polygon(screen, BLUE, [(300, 300), (350, 250), (400, 300)])
-        pygame.draw.line(screen, (255, 255, 0), (100, 400), (400, 400), 5)
-                    
+        pygame.draw.rect(screen, RED, (x, y, width, height))
 
         #Con esto hacemos que cada que acaba el bucle
         #se redibuje todo lo que debe redibujar
