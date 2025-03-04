@@ -23,7 +23,7 @@ def main():
     pygame.init()
     #Creacion y titulacion de la ventana
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Actividad 1")
+    pygame.display.set_caption("Actividad 2")
 
     #Bucle principal
     while True:
