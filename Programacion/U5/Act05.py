@@ -6,7 +6,7 @@ from pygame.locals import *
 import sys
 
 #-----Constantes-----#
-SCREEN_WIDTH=1200
+SCREEN_WIDTH=800
 SCREEN_HEIGHT=600
 BLACK=(0, 0, 0)
 WHITE=(255, 255, 255)
@@ -14,14 +14,12 @@ RED=(255, 0, 0)
 GREEN=(0, 255, 0)
 BLUE=(0, 0, 255)
 
-#-----Definir variables-----#
-background=pygame.image.load("./background.png").convert
-
 #-----Definir clase-----#
 class Pad(pygame.sprite.Sprite):
     def __init__(self, pos,*groups):
         super().__init__(*groups)
-        self.image=pygame.Surface((12,30)).convert().fill((WHITE))
+        self.image=pygame.Surface((12,60)).convert()
+        self.image.fill((WHITE))
         self.rect=self.image.get_rect(center=pos)
         self.maxSpeed=5
         self.speed=0
@@ -41,7 +39,9 @@ class Pad(pygame.sprite.Sprite):
 class Ball(pygame.sprite.Sprite):
     def __init__(self, pos,*groups):
         super().__init__(*groups)
-        self.image=pygame.Surface((12,30)).convert().fill((WHITE))
+        self.pos=pos
+        self.image=pygame.Surface((10,10)).convert()
+        self.image.fill((WHITE))
         self.rect=self.image.get_rect(center=pos)
         self.speedX=0
         self.speedY=0
@@ -62,6 +62,9 @@ class Ball(pygame.sprite.Sprite):
     
     def update(self):
         self.rect.move_ip(self.speedX,self.speedY)
+
+    def reset(self):
+        self.rect=self.image.get_rect(center=self.pos)
 
 class Score(pygame.sprite.Sprite):
     def __init__(self, font, pos=(0,0),*groups):
@@ -91,10 +94,11 @@ def main():
 
     #-----VarLocales-----#
     y=0
+    background=pygame.image.load("./background.png").convert()
     leftPad=Pad((SCREEN_WIDTH/6, SCREEN_HEIGHT/4))
     rigthPad=Pad((5*SCREEN_WIDTH/6, 3*SCREEN_HEIGHT/4))
     ball=Ball((SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
-    font=pygame.font.Font('./wendy.tff', 90)
+    font=pygame.font.Font('./wendy.ttf', 90)
     leftScore=Score(font,(SCREEN_WIDTH/3,SCREEN_HEIGHT/8))
     rigthScore=Score(font,(2*SCREEN_WIDTH/3,SCREEN_HEIGHT/8))
     sprites=pygame.sprite.Group(leftPad,rigthPad,ball,leftScore,rigthScore)
@@ -118,30 +122,20 @@ def main():
                 #Movimientos a traves de un input de tecla
                 match(event.key):
                     case pygame.K_w:
-                        if y<=0:
-                            y=0
-                        else:
-                            y-=10
+                        leftPad.move_up()
                     case pygame.K_s:
-                        if y>=SCREEN_HEIGHT-100:
-                            y=SCREEN_HEIGHT-100
-                        else:
-                            y+=10
+                        leftPad.move_down()
                     case pygame.K_UP:
-                        if y<=0:
-                            y=0
-                        else:
-                            y-=10
+                        rigthPad.move_up()
                     case pygame.K_DOWN:
-                        if y>=SCREEN_HEIGHT-100:
-                            y=SCREEN_HEIGHT-100
-                        else:
-                            y+=10
+                        rigthPad.move_down()
+                    case pygame.K_SPACE:
+                        ball.start(5,2)
             
             if ball.rect.colliderect(top) or ball.rect.colliderect(bottom):
-                ball.change_y
+                ball.change_y()
             elif ball.rect.colliderect(leftPad.rect) or ball.rect.colliderect(rigthPad.rect):
-                ball.change_x
+                ball.change_x()
 
             screenRect=screen.get_rect().inflate(0,-10)
             leftPad.rect.clamp_ip(screenRect)
@@ -161,7 +155,7 @@ def main():
         sprites.update()
         screen.blit(background,(0,0))
         sprites.draw(screen)
-        screen.display.flip()
+        pygame.display.flip()
 
 
 if __name__=="__main__":
