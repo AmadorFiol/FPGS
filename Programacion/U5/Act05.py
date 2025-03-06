@@ -63,6 +63,22 @@ class Ball(pygame.sprite.Sprite):
     def update(self):
         self.rect.move_ip(self.speedX,self.speedY)
 
+class Score(pygame.sprite.Sprite):
+    def __init__(self, font, pos=(0,0),*groups):
+        super().__init__(*groups)
+        self.font=font
+        self.pos=pos
+        self.score=0
+        self.image=self.font.render(str(self.score), 0, WHITE)
+        self.rect=self.image.get_rect(center=self.pos)
+    
+    def score_up(self):
+        self.score+=1
+
+    def update(self):
+        self.image=self.font.render(str(self.score), 0, WHITE)
+        self.rect=self.image.get_rect(center=self.pos)
+
 
 #----Main----#
 def main():
@@ -75,19 +91,24 @@ def main():
 
     #-----VarLocales-----#
     y=0
-    padLeft=Pad((SCREEN_WIDTH/6, SCREEN_HEIGHT/4))
-    padRight=Pad((5*SCREEN_WIDTH/6, 3*SCREEN_HEIGHT/4))
+    leftPad=Pad((SCREEN_WIDTH/6, SCREEN_HEIGHT/4))
+    rigthPad=Pad((5*SCREEN_WIDTH/6, 3*SCREEN_HEIGHT/4))
     ball=Ball((SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
-    sprites=pygame.sprite.Group(padLeft,padRight,ball)
+    font=pygame.font.Font('./wendy.tff', 90)
+    leftScore=Score(font,(SCREEN_WIDTH/3,SCREEN_HEIGHT/8))
+    rigthScore=Score(font,(2*SCREEN_WIDTH/3,SCREEN_HEIGHT/8))
+    sprites=pygame.sprite.Group(leftPad,rigthPad,ball,leftScore,rigthScore)
     clock=pygame.time.Clock()
     top=pygame.Rect(0,0,SCREEN_WIDTH,5)
     bottom=pygame.Rect(0,SCREEN_HEIGHT-5,SCREEN_WIDTH,5)
+    left=pygame.Rect(0,0,5,SCREEN_HEIGHT)
+    rigth=pygame.Rect(SCREEN_WIDTH-5,0,5,SCREEN_HEIGHT)
 
     #Bucle principal
     while True:
         clock.tick(fps)
-        padLeft.stop()
-        padRight.stop()
+        leftPad.stop()
+        rigthPad.stop()
 
         #Posibles entradas del teclado y mouse
         for event in pygame.event.get():
@@ -106,14 +127,36 @@ def main():
                             y=SCREEN_HEIGHT-100
                         else:
                             y+=10
-                    case pygame.K_SPACE:
-                        ball.start(0,0)
+                    case pygame.K_UP:
+                        if y<=0:
+                            y=0
+                        else:
+                            y-=10
+                    case pygame.K_DOWN:
+                        if y>=SCREEN_HEIGHT-100:
+                            y=SCREEN_HEIGHT-100
+                        else:
+                            y+=10
+            
+            if ball.rect.colliderect(top) or ball.rect.colliderect(bottom):
+                ball.change_y
+            elif ball.rect.colliderect(leftPad.rect) or ball.rect.colliderect(rigthPad.rect):
+                ball.change_x
 
+            screenRect=screen.get_rect().inflate(0,-10)
+            leftPad.rect.clamp_ip(screenRect)
+            rigthPad.rect.clamp_ip(screenRect)
+
+        if ball.rect.colliderect(left):
+            rigthScore.score_up()
+            ball.reset()
+            ball.stop()
+        elif ball.rect.colliderect(rigth):
+            leftScore.score_up()
+            ball.reset()
+            ball.stop()
         
-        #Con esto hacemos que cada que acaba el bucle
-        #se redibuje todo lo que debe redibujar
-        pygame.display.update()
-
+        
         #Mostrar la imagen en el fondo y los sprites
         sprites.update()
         screen.blit(background,(0,0))
