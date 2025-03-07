@@ -1,8 +1,36 @@
+h1 {
+    width: 250px;
+    background-color: blueviolet;
+    color: white;
+}
+
 img{
     width: 250px;
-    box-shadow: 2px;
+    box-shadow: 2px 2px black;
 }
 table{
+    margin-top: 10px;
     width: 250px;
-    box-shadow: 2px;
+    border-collapse: collapse;
+    box-shadow: 2px 2px black;
+    border: 3px solid red;
+    
+}
+
+tr :first-child {
+    background-color: pink;
+}
+
+th {
+    background-color: hotpink;
+}
+
+td {
+    border: 3px solid red;
+}
+
+#actualSong {
+    background-color: yellow;
+    color: red;
+    box-shadow: 2px 2px black;
 }
