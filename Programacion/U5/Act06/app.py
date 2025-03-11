@@ -7,9 +7,12 @@ from pygame.locals import *
 #Es posible que necesites instalarla, para ello usa pip install requests
 import requests
 
+#Esta libreria me permite usar el archivo online
+from io import BytesIO
+
 #-----Constantes-----#
-SCREEN_WIDTH=800
-SCREEN_HEIGHT=600
+SCREEN_WIDTH=477
+SCREEN_HEIGHT=941
 BLACK=(0, 0, 0)
 WHITE=(255, 255, 255)
 RED=(255, 0, 0)
@@ -20,13 +23,15 @@ LIGTHBLUE=(52, 204, 255)
 #-----Definir clase-----#
 class Pokemon(pygame.sprite.Sprite):  
     
-    def __init__(self,numPokedex,nombre,tipo,img,desc,*groups):
+    def __init__(self,numPokedex,nombre,tipo,image,desc,*groups):
         super().__init__(*groups)
         self.numPokedex=numPokedex
         self.nombre=nombre
         self.tipo=tipo
-        self.img=img
         self.desc=desc
+        self.image=BytesIO(image)
+        self.image=pygame.image.load(self.image).convert_alpha()
+        self.rect=self.image.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/4))
 
 #-----Declaramos variables-----#
 pokedex={}
@@ -43,7 +48,7 @@ def download_pokemons():
             data['id'], #Numero de Pokedex
             data['name'],
             [tipo['type']['name'] for tipo in data['types']], #Tipos, bucle comprimido por si ahi 2 tipos
-            data['sprites']['front_default'],
+            requests.get(data['sprites']['front_default']).content,
             get_descPokemon(i)
             )
     return pokedex
@@ -59,35 +64,34 @@ def get_descPokemon(numPokedex):
     return (data['flavor_text_entries'][0]['flavor_text'])
 
 def next_Pokemon(numPokedex):
-    if numPokedex==151:
+    if numPokedex==15:
         return pokedex[1]
     else:
         return pokedex[numPokedex+1]
 
 def previous_Pokemon(numPokedex):
     if numPokedex==1:
-        return pokedex[151]
+        return pokedex[15]
     else:
         return pokedex[numPokedex-1]
 
 #----Main----#
 def main():
-    pokedex=download_pokemons()
-    actualPokemon=pokedex[1]
-
     pygame.init()
     screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Pokedex")
-    fps=60
-    pygame.key.set_repeat(1,int(1000/fps))
-    sprites=pygame.sprite.Group()
-    clock=pygame.time.Clock()
+    pokedex=download_pokemons()
+    actualPokemon=pokedex[1]
+    background=pygame.image.load("./background.jpg").convert()
+    FONT=pygame.font.Font("./wendy.ttf", 12)
+    text_box_rect = pygame.Rect(150, 200, 340, 50)
+    text_surface = FONT.render(actualPokemon.desc, True, BLACK)
+    pygame.draw.rect(screen, BLACK, text_box_rect, border_radius=10)
+
+    sprites=pygame.sprite.Group(actualPokemon)
 
     #Bucle principal
     while True:
-        screen.fill(LIGTHBLUE)
-        clock.tick(fps)
-
         #Posibles entradas del teclado y mouse
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -95,13 +99,18 @@ def main():
             elif event.type==pygame.KEYDOWN:
                 #Movimientos a traves de un input de tecla
                 match(event.key):
-                    case pygame.K_a | pygame.K_LEFT:
+                    case pygame.K_a:
                         actualPokemon=previous_Pokemon(actualPokemon.numPokedex)
-                    case pygame.K_d | pygame.K_RIGHT:
+                    case pygame.K_d:
                         actualPokemon=next_Pokemon(actualPokemon.numPokedex)
+            
+        sprites=pygame.sprite.Group(actualPokemon)
+        text_surface = FONT.render(actualPokemon.desc, True, BLACK)
         
-        #Mostrar la imagen en el fondo y los sprites
+        #Mostrar la image en el fondo y los sprites
         sprites.update()
+        screen.blit(background,(0,0))
+        screen.blit(text_surface, (text_box_rect.x + 10, text_box_rect.y + 10))
         sprites.draw(screen)
         pygame.display.flip()
 

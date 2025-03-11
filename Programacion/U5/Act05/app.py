@@ -92,7 +92,6 @@ def main():
     pygame.key.set_repeat(1,int(1000/fps))
 
     #-----VarLocales-----#
-    y=0
     background=pygame.image.load("./background.png").convert()
     leftPad=Pad((SCREEN_WIDTH/6, SCREEN_HEIGHT/4))
     rigthPad=Pad((5*SCREEN_WIDTH/6, 3*SCREEN_HEIGHT/4))
