@@ -1,7 +1,418 @@
 <!DOCTYPE html>
 <head>
-
+  <title>Act 2 - Spotify</title>
+  <style>
+    /* Estilos Globales */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      text-align: center;
+    }
+    a {
+      text-decoration: none;
+    }
+    /* Navegación */
+    nav {
+      background: #181818;
+      padding: 1rem;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+    }
+    /* Sección Parallax */
+    .parallax {
+      background-image: url('./img/background.jpg');
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    /* Sección Hero */
+    .hero {
+      position: relative;
+      background: rgba(0, 0, 0, 0.6);
+      height: 10vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 50px;
+      color: white;
+      text-align: left;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* Overlay semitransparente */
+      z-index: 0;
+    }
+    .hero h1,
+    .hero .subtitulo,
+    .hero .acciones {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      margin: 0;
+    }
+    .hero .subtitulo {
+      font-size: 1.2rem;
+      color: #b3b3b3;
+      margin-top: 5px;
+    }
+    .hero .acciones {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .hero .playButton {
+      background: #1db954;
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: black;
+      cursor: pointer;
+    }
+    .hero .seguir {
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 8px 20px;
+      font-size: 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    /* Sección Populares */
+    .populares {
+      padding: 2rem;
+    }
+    .populares table {
+      width: 80%;
+      margin: auto;
+      border-collapse: collapse;
+    }
+    .populares th,
+    .populares td {
+      padding: 10px;
+      text-align: left;
+    }
+    .populares img {
+      width: 50px;
+      border-radius: 5px;
+    }
+    /* Sección Discografía */
+    .discografia {
+      padding: 2rem;
+    }
+    .albums {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .album-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .album-item img {
+      width: 150px;
+      border-radius: 10px;
+    }
+    .album-item p {
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: #b3b3b3;
+    }
+    /* Sección Biografía */
+    .biografia {
+      position: relative;
+      background: url('./img/background.jpg') no-repeat center center/cover;
+      padding: 100px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+    .biografia .contenido {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 80%;
+      font-size: 1.2rem;
+    }
+    /* Footer */
+    .footer {
+      background-color: #000;
+      color: white;
+      padding: 40px 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer .columnas {
+      display: flex;
+      gap: 50px;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .footer .columna h4 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer .columna ul {
+      list-style: none;
+      padding: 0;
+    }
+    .footer .columna ul li {
+      margin-bottom: 8px;
+    }
+    .footer .columna ul li a {
+      font-size: 0.9rem;
+      color: #b3b3b3;
+      transition: color 0.3s ease;
+    }
+    .footer .columna ul li a:hover {
+      color: white;
+    }
+    .footer .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .footer .social-icons a {
+      background: #181818;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .footer .social-icons a img {
+      width: 50%;
+      height: 50%;
+      object-fit: contain;
+    }
+    .footer .social-icons a:hover {
+      background: #282828;
+    }
+    .footer .legal {
+      width: 100%;
+      text-align: center;
+      margin-top: 30px;
+      border-top: 1px solid #282828;
+      padding-top: 15px;
+      font-size: 0.8rem;
+      color: #b3b3b3;
+    }
+    .footer .legal a {
+      color: #b3b3b3;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+    .footer .legal a:hover {
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <!--Fondo con parallax-->
+  <!-- Header -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Categorías</a></li>
+        <li><a href="#">Buscar</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Parallax Section -->
+  <section class="parallax">
+  </section>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Varry Brava</h1>
+    <p class="subtitulo">143.288 oyentes mensuales</p>
+    <div class="acciones">
+      <button class="playButton">▶</button>
+      <button class="seguir">Seguir</button>
+    </div>
+  </section>
+  <!-- Populares Section -->
+  <section class="populares">
+    <h2>Populares</h2>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Portada</th>
+        <th>Canción</th>
+        <th>Oyentes</th>
+        <th>Duración</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td><img src="./img/LaTormenta.jpg" alt="La Tormenta"></td>
+        <td>La Tormenta</td>
+        <td>1,477,919</td>
+        <td>3:12</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><img src="./img/NoGires.jpg" alt="No Gires"></td>
+        <td>No Gires</td>
+        <td>12,079,868</td>
+        <td>2:23</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><img src="./img/Playa.jpg" alt="Playa"></td>
+        <td>Playa</td>
+        <td>6,689,548</td>
+        <td>3:37</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><img src="./img/Raffaella.jpg" alt="Raffaella"></td>
+        <td>Raffaella</td>
+        <td>7,801,915</td>
+        <td>2:46</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><img src="./img/NoGires(2).png" alt="No Gires"></td>
+        <td>No Gires</td>
+        <td>1,755,414</td>
+        <td>2:44</td>
+      </tr>
+    </table>
+  </section>
+  <!-- Discografía Section -->
+  <section class="discografia">
+    <h2>Discografía</h2>
+    <div class="albums">
+      <div class="album-item">
+        <img src="./img/SHARIROP.jpg" alt="SHARIROP">
+        <p>2025 · Álbum</p>
+      </div>
+      <div class="album-item">
+        <img src="./img/Arriva.jpg" alt="Arriva">
+        <p>2014 · Álbum</p>
+      </div>
+      <div class="album-item">
+        <img src="./img/Demasié.png" alt="Demasié">
+        <p>2012 · Álbum</p>
+      </div>
+      <div class="album-item">
+        <img src="./img/NoGires.jpg" alt="No Gires">
+        <p>2010 · Sencillo</p>
+      </div>
+      <div class="album-item">
+        <img src="./img/Raffaella.jpg" alt="Raffaella">
+        <p>2021 · Sencillo</p>
+      </div>
+      <div class="album-item">
+        <img src="./img/LaTormenta.jpg" alt="La Tormenta">
+        <p>2024 · Sencillo</p>
+      </div>
+      <div class="album-item">
+        <img src="./img/BajoLaLuzPerfecta.jpg" alt="Bajo la Luz Perfecta">
+        <p>2022 · Sencillo</p>
+      </div>
+    </div>
+  </section>
+  <!-- Biografía Section -->
+  <section class="biografia">
+    <div class="contenido">
+      <h2>Información del Grupo</h2>
+      <p>Allá por el verano de 2009 surgió la idea de una banda divertida, sin prejuicios, descarada y hedonista. Había transcurrido muy poco tiempo del fallecimiento de Barry White y Mina Mazzini seguía resonando en nuestras cabezas. De ahí salió...</p>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="columnas">
+      <div class="columna">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="https://www.spotify.com/es/about-us/contact/">Acerca de</a></li>
+          <li><a href="https://www.lifeatspotify.com">Empleo</a></li>
+          <li><a href="https://newsroom.spotify.com">For the Record</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h4>Comunidades</h4>
+        <ul>
+          <li><a href="https://artists.spotify.com/home">Para artistas</a></li>
+          <li><a href="https://developer.spotify.com">Desarrolladores</a></li>
+          <li><a href="https://ads.spotify.com/es-ES/">Publicidad</a></li>
+          <li><a href="https://investors.spotify.com/home/default.aspx">Inversores</a></li>
+          <li><a href="https://spotifyforvendors.com">Proveedores</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="https://support.spotify.com/es/">Asistencia</a></li>
+          <li><a href="https://www.spotify.com/es/download/">App gratis para móvil</a></li>
+        </ul>
+      </div>
+      <div class="columna">
+        <h4>Planes de Spotify</h4>
+        <ul>
+          <li><a href="https://www.spotify.com/es/premium/#ref=spotifycom_footer_premium_individual">Premium Individual</a></li>
+          <li><a href="https://www.spotify.com/es/duo/#ref=spotifycom_footer_premium_duo">Premium Duo</a></li>
+          <li><a href="https://www.spotify.com/es/family/#ref=spotifycom_footer_premium_family">Premium Familiar</a></li>
+          <li><a href="https://www.spotify.com/es/student/#ref=spotifycom_footer_premium_student">Premium para Estudiantes</a></li>
+          <li><a href="https://www.spotify.com/es/free/#ref=spotifycom_footer_free">Spotify Free</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/spotify/"><img src="./img/instagram.png" alt="Instagram"></a>
+      <a href="https://x.com/spotify"><img src="./img/twitter.png" alt="Twitter"></a>
+      <a href="https://www.facebook.com/Spotify"><img src="./img/facebook.png" alt="Facebook"></a>
+    </div>
+    <div class="legal">
+      <a href="https://www.spotify.com/es/legal/end-user-agreement/">Legal</a>
+      <a href="https://www.spotify.com/es/safetyandprivacy">Centro de seguridad y privacidad</a>
+      <a href="https://www.spotify.com/es/legal/privacy-policy/">Política de Privacidad</a>
+      <a href="#">Configuración de cookies</a>
+      <a href="https://www.spotify.com/es/legal/privacy-policy/#s3">Información sobre los anuncios</a>
+      <a href="https://www.spotify.com/es/accessibility">Accesibilidad</a>
+      <br>
+      <p>© 2025 Amador Fiol Borel &amp; ChatGPT</p>
+    </div>
+  </footer>
 </body>
