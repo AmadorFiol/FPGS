@@ -1,7 +1,7 @@
 '''
 Pokedex
 '''
-import pygame, sys
+import pygame, sys, random
 from pygame.locals import *
 #Esta libreria es la que me permite realizar la conexion con la pokeapi
 #Es posible que necesites instalarla, para ello usa pip install requests
@@ -21,14 +21,17 @@ BLUE=(0, 0, 255)
 LIGTHBLUE=(52, 204, 255)
 
 #-----Definir clase-----#
-class Pokemon(pygame.sprite.Sprite):  
-    
-    def __init__(self,numPokedex,nombre,tipo,image,desc,*groups):
+class Pokemon(pygame.sprite.Sprite):   
+    def __init__(self,numPokedex,nombre,tipos,image,desc,lv,*groups):
         super().__init__(*groups)
         self.numPokedex=numPokedex
         self.nombre=nombre
-        self.tipo=tipo
+        if len(tipos)==2:
+            self.tipo=tipos[0]+" "+tipos[1]
+        else:
+            self.tipo=tipos[0]
         self.desc=desc
+        self.lv=lv
         self.image=BytesIO(image)
         self.image=pygame.image.load(self.image).convert_alpha()
         self.rect=self.image.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/4))
@@ -50,7 +53,8 @@ def download_pokemons():
             data['name'],
             [tipo['type']['name'] for tipo in data['types']], #Bucle comprimido por si ahi 2 tipos
             requests.get(data['sprites']['front_default']).content, #Imagen
-            get_descPokemon(i)
+            get_descPokemon(i),
+            random.randint(1,100)
             )
     return pokedex
 
@@ -62,14 +66,9 @@ def get_descPokemon(numPokedex):
     url="https://pokeapi.co/api/v2/pokemon-species"
     response=(requests.get(f"{url}/{numPokedex}"))
     data=response.json()
-    #Por alguna razon la entrada con de pokedex de caterpie con id 1 en 
-    #la api aparece en japones y es la de id 1 la que esta en ingles.
-    #Para el resto la descripcion en ingles si esta en la id 0
-    if numPokedex==10:
-        desc=change_certain_chars(data['flavor_text_entries'][1]['flavor_text'])
-    else:
-        desc=change_certain_chars(data['flavor_text_entries'][0]['flavor_text'])
-
+    for entrie in data['flavor_text_entries']:
+        if entrie['language']['name']=="es":
+            desc=change_certain_chars(entrie['flavor_text'])
     return desc
 
 #Hay algunos caracteres que no se detectan correctamente
@@ -78,14 +77,21 @@ def get_descPokemon(numPokedex):
 def change_certain_chars(text):
     desc=""
     for char in text:
-        if char=="\n":
-            desc+=" "
-        elif char=="é":
-            desc+="e"
-        elif char=="": #Este es un simbolo de una flecha hacia arriba
-            desc+=" "
-        else:
-            desc+=char
+        match (char):
+            case "\n":
+                desc+=" "
+            case "á":
+                desc+="a"
+            case "é":
+                desc+="e"
+            case "í":
+                desc+="i"
+            case "ó":
+                desc+="o"
+            case "ú":
+                desc+="u"
+            case _:
+                desc+=char
     return desc
 
 #Funcion realizada por GPT para poder realizar salto de linea
@@ -135,9 +141,11 @@ def main():
     pokedex=download_pokemons()
     actualPokemon=pokedex[1]
     background=pygame.image.load("./background.jpg").convert()
-    FONT=pygame.font.Font("./wendy.ttf", 12)
-    desc_rect=pygame.Rect(30, SCREEN_HEIGHT/2, 400, 50) #(x, y, ancho, alto)
-    pygame.draw.rect(screen, BLACK, desc_rect, border_radius=10)
+    FONT=pygame.font.Font("./wendy.ttf", 20)
+    descFont=pygame.font.Font("./wendy.ttf",32)
+    descRect=pygame.Rect(30, SCREEN_HEIGHT/2, 400, 50) #(x, y, ancho, alto)
+    typeRect=pygame.Rect(30, SCREEN_HEIGHT/4, 100, 50)
+    lvRect=pygame.Rect(SCREEN_WIDTH-100, SCREEN_HEIGHT/4, 100, 50)
 
     sprites=pygame.sprite.Group(actualPokemon)
 
@@ -160,7 +168,9 @@ def main():
         #Mostrar la image en el fondo y los sprites
         sprites.update()
         screen.blit(background,(0,0))
-        draw_wrapped_text(screen, actualPokemon.desc, desc_rect, FONT, BLACK)
+        draw_wrapped_text(screen, actualPokemon.desc, descRect, descFont, BLACK)
+        draw_wrapped_text(screen, f"Tipos: {actualPokemon.tipo}", typeRect, FONT, BLACK)
+        draw_wrapped_text(screen, f"Lv.{actualPokemon.lv}", lvRect, FONT, BLACK)
         sprites.draw(screen)
         pygame.display.flip()
 
