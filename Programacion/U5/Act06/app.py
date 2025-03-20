@@ -43,7 +43,7 @@ pokedex={}
 def download_pokemons():
     #Vamos a cargar solo la pokedex de la primera generacion
     #que consta de 151 pokemons
-    #-----Usando solo los 15 primeros para pruebas-----#
+    #Al final usando solo los 15 primeros pq sino son demasiados y peta
     url="https://pokeapi.co/api/v2/pokemon"
     for i in range(1,16):
         response=(requests.get(f"{url}/{i}")) #Realizamos la peticion
