@@ -6,5 +6,5 @@ lista=["a","b"]
 #lista.append("c")
 try:
     print(lista[2])
-except:
+except IndexError:
     print("404 Elemento no encontrado")

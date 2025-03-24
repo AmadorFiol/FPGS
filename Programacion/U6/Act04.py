@@ -7,7 +7,7 @@ nums=[]
 i=input("Cuantos numeros quieres escribir? ")
 try:
     i=int(i)
-except:
+except ValueError:
     print(f"{i} no es un valor numerico")
     exit()
 
@@ -20,5 +20,5 @@ try:
         num=int(num)
         sum+=num
     print(f"La suma de esos numeros es {sum}")
-except:
+except ValueError:
      print("Alguno de los valores no es un numero")

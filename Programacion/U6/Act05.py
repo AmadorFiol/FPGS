@@ -7,5 +7,5 @@ try:
         for line in file:
             print(line)
     file.close()
-except:
+except FileNotFoundError:
     print("404 Archivo no encontrado")

@@ -6,11 +6,12 @@ Si el usuario introduce un valor incorrecto (por ejemplo una palabra) dará un m
 num=input("Escribe un numero ")
 try:
     num=int(num)
+except ValueError:
+    print("Eso no es un numero")
+else:
     if num<0:
         print(f"El numero {num} es negativo")
     elif num>0:
         print(f"El numero {num} es positivo")
     else:
         print("El numero introducido es un 0")
-except:
-    print("Eso no es un numero")

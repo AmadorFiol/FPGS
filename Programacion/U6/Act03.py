@@ -6,5 +6,5 @@ userInput=input("Escribe cualquier cosa: ")
 try:
     userInput=int(userInput)
     print("El string puede ser trasnformada a un int")
-except:
+except ValueError:
     print("No se puede transformar el string a un entero")

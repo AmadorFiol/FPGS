@@ -8,5 +8,5 @@ string="Hola"
 try:
    num=int(string)
    print("Se ha podido transfromar el string a un numero")
-except:
+except ValueError:
    print("No se puede transformar el string a un numero") 
