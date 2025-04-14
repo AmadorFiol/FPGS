@@ -43,7 +43,10 @@ def get_alumno(alumno):
     file.close()
     return False
 def show_nota_alumno(alumno):
-    pass
+    with open("./notas.csv","r") as file:
+        for line in file.readlines():
+            if line.split(",")[0]==alumno:
+                print(f"{line.split(",")[1]}:{line.split(",")[2]}")
 
 #-----Main-----#
 salir=False
@@ -62,7 +65,9 @@ while(not salir):
         case "2":
             calc_media()
         case "3":
-            show_nota_alumno()
+            alumno=input("Escribe el nombre del alumno")
+            if get_alumno(alumno):
+                show_nota_alumno(alumno)
         case "S":
             salir=True
         case _:
