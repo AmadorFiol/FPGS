@@ -1,5 +1,6 @@
 import datetime, os
 
+#-----Declaramos funciones-----#
 def show_users():
     users={}
     with open("./accesos.log", "r") as file:
@@ -34,6 +35,7 @@ def copy_file():
         print("Archivos copiados correctamente")
     file.close()
 
+#-----Main-----#
 name=input("Cual es tu nombre? ")
 with open("./accesos.log","a") as file:
     file.write(f"Usuario {name} a las {datetime.datetime.now()} ha entrado\n")
