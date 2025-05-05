@@ -1,0 +1,10 @@
+Se ha creado la carpeta png
+El archivo a.png se ha movido a png
+Se ha creado la carpeta csv
+El archivo datos.csv se ha movido a csv
+El archivo perro.png se ha movido a png
+Se ha creado la carpeta txt
+El archivo test1.txt se ha movido a txt
+El archivo test2.txt se ha movido a txt
+El archivo algo.csv se ha movido a csv
+El archivo test3.txt se ha movido a txt
