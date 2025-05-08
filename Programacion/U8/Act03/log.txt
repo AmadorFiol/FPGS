@@ -8,3 +8,5 @@ El archivo test1.txt se ha movido a txt
 El archivo test2.txt se ha movido a txt
 El archivo algo.csv se ha movido a csv
 El archivo test3.txt se ha movido a txt
+El archivo test1.txt se ha movido a txt
+El archivo test1.txt se ha movido a txt
