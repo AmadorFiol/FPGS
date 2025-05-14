@@ -2,12 +2,17 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-require("dotenv").config();
+require("dotenv").config()
+/*
+GGL_CLI_ID -> ID cliente google
+GGL_CLI_SCRT -> Secreto cliente google
+SESSION_SCRT -> Secreto sesion
+*/
 
 const app = express();
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SCRT,
   resave: false,
   saveUninitialized: false,
 }));
@@ -21,8 +26,8 @@ passport.deserializeUser((user, done) => done(null, user));
 
 // Configurar estrategia de Google
 passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  clientID: process.env.GGL_CLI_ID,
+  clientSecret: process.env.GGL_CLI_SCRT,
   callbackURL: "/auth/google/callback",
 }, (accessToken, refreshToken, profile, done) => {
   return done(null, profile);
