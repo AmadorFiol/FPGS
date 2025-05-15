@@ -116,7 +116,6 @@ def search_file(fileIn):
                     print(f"Hay una coincidencia en la carpeta {dir}")
     
 def do_backup(fileIn):
-    
     try:
         if fileIn.split(".")[1] is not None:
             ruta=get_ruta(fileIn.split(".")[1])
@@ -156,11 +155,43 @@ def do_backup(fileIn):
                     os.system("pause")
 
 def restore_file(fileIn):
-    pass
-    '''
-    Hacer lo mismo que con do_backup pero copiando del backup
-    a la ruta del archivo a restaurar y cambiando ext del backup
-    '''
+    try:
+        if fileIn.split(".")[1] is not None:
+            ruta=get_ruta(fileIn.split(".")[1])
+            if ruta=="Backups":
+                print("No se puede restaurar un backup")
+            elif f"{fileIn.split(".")[0]}.txt" in os.listdir("Backups"):
+                for file in os.listdir("Backups"):
+                    if f"{fileIn.split(".")[0]}.txt"==file:
+                        if fileIn in os.listdir(ruta):
+                            raise FileExistsError
+                        os.system(f"copy .\\Backups\\{fileIn.split(".")[0]}.txt .\\{ruta}\\{fileIn}")
+                        log.write(f"[{datetime.now()}] Se ha restaurado el archivo {fileIn}\n")
+                        print(f"Se ha restaurado el archivo {fileIn}")
+            else:
+                raise FileNotFoundError
+            
+    except IndexError:
+        print("Escriba la extension del archivo tambien porfavor")
+    except FileNotFoundError:
+        print(f"No se ha encontrado un backup para el archivo {fileIn}")
+    except FileExistsError:
+        #Prodecer a preguntar si quiere cambiar el backup antiguo por el actual
+        decided=False
+        while(not decided):
+            print(f"El archivo que quiere restaurar existe")
+            match(input("Quiere proceder con la restauracion? (Y/N) ").upper()):
+                case "Y" | "S":
+                    os.system(f"copy .\\Backups\\{fileIn.split(".")[0]}.txt .\\{ruta}\\{fileIn}")
+                    log.write(f"[{datetime.now()}] Se ha restaurado el archivo {fileIn}\n")
+                    print(f"Se ha restaurado el archivo {fileIn}")
+                    decided=True
+                case "N":
+                    print("Cancelando operacion")
+                    decided=True
+                case _:
+                    print("Esa no es una opcion valida")
+                    os.system("pause")
     
 #-----Main-----#
 login()
@@ -169,6 +200,7 @@ while(not salir):
     print("1. Reorganizar archivos")
     print("2. Buscar archivo")
     print("3. Realizar backup")
+    print("4. Restaurar backup")
     print("S. Salir")
     match(input("Escriba la opcion deseada: ").upper()):
         case "1":
@@ -177,6 +209,8 @@ while(not salir):
             search_file(input("Escriba el nombre del archivo: "))
         case "3":
             do_backup(input("Escriba el nombre del archivo con la extension: "))
+        case "4":
+            restore_file(input("Escriba el nombre del archivo a restaurar con la extendion: "))
         case "S":
             log.close()
             salir=True

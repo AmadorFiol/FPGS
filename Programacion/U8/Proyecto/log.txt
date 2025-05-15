@@ -8,4 +8,7 @@
 [2025-05-15 14:20:23.930227] El archivo test.xls se ha movido a Facturas
 [2025-05-15 15:31:00.158189] Se ha realizado un backup de test.pdf
 [2025-05-15 15:33:07.538307] Se ha realizado un backup de test.pdf
-[2025-05-15 15:34:11.719294] Se ha realizado un backup de test.pdf[2025-05-15 15:36:59.902020] Se ha realizado un backup de test.pdf
+[2025-05-15 15:34:11.719294] Se ha realizado un backup de test.pdf
+[2025-05-15 15:36:59.902020] Se ha realizado un backup de test.pdf
+[2025-05-15 22:31:28.549743] Se ha restaurado el archivo test.pdf
+[2025-05-15 22:31:42.951842] Se ha restaurado el archivo test.pdf
