@@ -80,5 +80,5 @@ void main() {
 
     Integer IVA = 21;
     input = JOptionPane.showInputDialog("Escriba el precio de un producto");
-    
+
 }
