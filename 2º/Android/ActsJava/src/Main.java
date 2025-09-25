@@ -78,7 +78,45 @@ void main() {
 
     System.out.println("\nAct 9 Calcular IVA");
 
-    Integer IVA = 21;
+    Double IVA = 0.21;
     input = JOptionPane.showInputDialog("Escriba el precio de un producto");
+    System.out.println("El precio con IVA es: " + (Double.parseDouble(input) + (Double.parseDouble(input)*IVA)));
 
+
+    System.out.println("\nAct 10 Numeros 1 al 100 con while");
+
+    x=1;
+    while(x<=100){
+        System.out.println(x);
+        x++;
+    }
+
+
+    System.out.println("\nAct 11 Numeros 1 al 100 con for");
+
+    for(Integer i = 1; i<=100; i++){
+        System.out.println(i);
+    }
+
+
+    System.out.println("\nAct 12 Numeros 1 al 100 divisibles entre 2 y 3");
+
+    for(Integer i = 1; i<=100; i++){
+        if(i%2==0 || i%3==0){
+            System.out.println(i);
+        }
+    }
+
+
+    System.out.println("\nAct 13 Numero de ventas y sumatorio");
+
+    Double db = 0.0;
+    input = JOptionPane.showInputDialog("Cuantas ventas has tenido hoy?");
+    for(Integer i=Integer.parseInt(input); i>0; i--){
+        input=JOptionPane.showInputDialog("Que tanto ha sido la venta?");
+        db = db + Double.parseDouble(input);
+    }
+
+
+    System.out.println("\nAct 14 ");
 }

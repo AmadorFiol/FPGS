@@ -3,9 +3,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 //Escribir 100 palabras, luego encontrar la mas buscada
+//Encontrar y controlar las posibles excepciones: FileNotFound, IOException, Permisos
 
 public class Main {
     public static void main(String[] args) {
@@ -24,11 +24,16 @@ public class Main {
             for(int i=0;i<100;i++){
                 fileWriter.write(words[r.nextInt(5-0)]);
             }
-            List<String> lines = fileReader.readAllLines();
             HashMap<String, Integer> wordCount = new HashMap<>();
-            for(List<String> lines){
-
+            for(String word:fileReader.readAllLines()){
+                if(wordCount.containsKey(word)){
+                    wordCount.put(word, wordCount.get(word)+1);
+                } else {
+                    wordCount.put(word,1);
+                }
             }
+
+            System.out.println(wordCount);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
