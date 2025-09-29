@@ -118,5 +118,17 @@ void main() {
     }
 
 
-    System.out.println("\nAct 14 ");
+    System.out.println("\nAct 14 Ecuacion segundo grado");
+
+    Double a = Double.parseDouble(JOptionPane.showInputDialog("Que es a?"));
+    Double b = Double.parseDouble(JOptionPane.showInputDialog("Y b?"));
+    Double c = Double.parseDouble(JOptionPane.showInputDialog("Y c?"));
+
+    Double secondGradeRes = Math.pow(b,2)-4*a*c;
+    if(secondGradeRes<0){
+        System.out.println("No se puede hacer una raiz cuadrada de un numero negativo");
+    } else {
+        secondGradeRes = Math.sqrt(secondGradeRes);
+
+    }
 }
