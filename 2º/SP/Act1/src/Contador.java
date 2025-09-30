@@ -1,17 +1,14 @@
-
 public class Contador extends Thread{
-    private int num=0;
+    private static int num=50;
 
-    public void increment(){
-        this.num++;
+    public static synchronized void decrement(){
+        num--;
+    }
+    public static int getNum(){
+        return num;
     }
 
-    public int getNum(){
-        return this.num;
-    }
     public void run(){
-        System.out.println("Inicio del hilo "+this.getName()+" con id "+this.getId());
-        increment();
+        decrement();
     }
-
 }
