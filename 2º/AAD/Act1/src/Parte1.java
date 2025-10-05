@@ -27,6 +27,7 @@ public class Parte1 {
                 }
                 System.out.println(line);
             }
+            fileReader.close();
             System.out.println("Hay "+i+" pasajero/s en Business");
 
         } catch (FileNotFoundException e) {

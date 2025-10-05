@@ -76,6 +76,7 @@ public class Parte2 {
                 }
                 System.out.println("Nº reservas: "+i.toString());
             }
+            fileReader.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("El archivo no a sido encontrado");;
