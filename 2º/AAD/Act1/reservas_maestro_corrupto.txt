@@ -1,0 +1,7 @@
+12A, Juan Perez, Economy, Madrid
+14B, Maria Lopez,, Paris
+21C, Carlos Garcia, Economy,
+05D, Ana Sanchez, Business, Londres
+,Luis Gomez, Economy, Paris
+08F,, Economy, Londres
+08F, Pablito, Economy, Madrir, AlgoMas
